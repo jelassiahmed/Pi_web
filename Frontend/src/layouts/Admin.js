@@ -16,6 +16,7 @@ import Settings from "views/admin/Settings.js";
 import Tables from "views/admin/Tables.js";
 import Products from "../views/admin/Products";
 import GetComplaintsData from "../views/complaint/ListComplaint";
+import Stats from "../components/HomePage/Stats";
 
 export default function Admin() {
 	return (
@@ -27,7 +28,7 @@ export default function Admin() {
 				<HeaderStats />
 				<div className="px-4 md:px-10 mx-auto w-full -m-24">
 					<Switch>
-						<Route path="/admin/dashboard" exact component={Dashboard} />
+						<Route path="/admin/dashboard" exact component={Stats} />
 						<Route
 							path="/admin/complaints"
 							exact
