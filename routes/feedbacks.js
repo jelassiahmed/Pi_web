@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var {Product,Categorie,Image}=require('../models/product');
-var User=require("../models/user.model");
-var {Feedback}=require("../models/feedback");
-var feedbacksController = require("../controllers/feedbackController");
+var {Product,Categorie,Image}=require('./../models/product');
+var User=require("./../models/user.model");
+var {Feedback}=require("./../models/feedback");
+var feedbacksController = require("./../controllers/feedbackController");
 
 router.post('/', async function (req, res)  {
     if (req.body.id_f) {

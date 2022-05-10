@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Complaint = require("../models/complaint.model");
+const Complaint = require("./../models/complaint.model");
 
 module.exports = {
 	getComplaintByUserId: async(req, res) => {

@@ -1,4 +1,4 @@
-var {Rate}=require("../models/rate");
+var {Rate}=require("./../models/rate");
 
 
 exports.getratingsjson=async function (request, result) {

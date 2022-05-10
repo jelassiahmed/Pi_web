@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const storeController = require("../controllers/storeController");
-const auth = require("../middleware/auth");
+const storeController = require("./../controllers/storeController");
+const auth = require("./../middleware/auth");
 
 router.get("/", storeController.getStore);
 router.get("/:id", storeController.getOneStore);

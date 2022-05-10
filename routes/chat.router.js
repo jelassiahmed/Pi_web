@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const chatController = require("../controllers/chat.controller");
+const chatController = require("./../controllers/chat.controller");
 
 router.get("/user/:idUser", chatController.getChatsByUserId);
 router.get("/:id", chatController.getChatByID);

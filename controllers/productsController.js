@@ -1,4 +1,4 @@
-var {Product,Categorie,Image}=require('../models/product');
+var {Product,Categorie,Image}=require('./../models/product');
 
 
 exports.getproductsjson=async function (request, result) {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const { modelName } = require("../models/complaint.model");
-const Contact = require("../models/contact.model");
+const { modelName } = require("./../models/complaint.model");
+const Contact = require("./../models/contact.model");
 
 modelName.exports = {
     getContacts: async(req, res, next) => {

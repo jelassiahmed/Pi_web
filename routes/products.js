@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var {Product,Categorie,Image}=require('../models/product');
-var {Store}=require("../models/store.model");
-var User=require("../models/user.model");
-var {Rate}=require("../models/rate");
-var {Feedback}=require("../models/feedback");
-var prodcutsController=require("../controllers/productsController")
+var {Product,Categorie,Image}=require('./../models/product');
+var {Store}=require("./../models/store.model");
+var User=require("./../models/user.model");
+var {Rate}=require("./../models/rate");
+var {Feedback}=require("./../models/feedback");
+var prodcutsController=require("./../controllers/productsController")
 const multer = require("multer");
 const path = require("path");
 const cloudinaryspeaky = require("cloudinary");

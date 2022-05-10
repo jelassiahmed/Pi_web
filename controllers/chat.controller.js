@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const Chat = require("../models/chat.model");
-const User = require("../models/user.model");
-const Store = require("../models/store.model");
+const Chat = require("./../models/chat.model");
+const User = require("./../models/user.model");
+const Store = require("./../models/store.model");
 
 module.exports = {
 	getChatsByUserId: async (req, res) => {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const { Store } = require("../models/store.model");
-const User = require("../models/user.model");
+const { Store } = require("./../models/store.model");
+const User = require("./../models/user.model");
 
 module.exports = {
 	getStore: (req, res) => {
