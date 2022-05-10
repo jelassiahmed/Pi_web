@@ -3,7 +3,7 @@ const url = 'http://localhost:5000';
 
 
 // Complaint API //
-export const getAllComplaint = () => axios.get(`${url}/complaint/getComplaints`);
+export const getAllComplaint = () => axios.get(`/complaint/getComplaints`);
 export const createComplaint = (newComplaint)=> axios.post(`${url}/complaint/addComplaint`, newComplaint);
 export const updateComplaint = (id, updateComplaint) => axios.patch(`${url}/complaint/updateComplaint/${id}`, updateComplaint);
 export const deleteComplaint = (id) => axios.delete(`${url}/complaint/deleteComplaint/${id}`);
