@@ -72,8 +72,8 @@ function App() {
 			<BrowserRouter>
 				<Switch>
 					{/* add routes with layouts */}
-					<Route path="/admin" component={isAdmin ? Admin : Index} />
-					<Route path="/auth" component={isLogged ? Index : Auth} />
+					<Route path="/admin" component={isAdmin ? Admin : HomePage} />
+					<Route path="/auth" component={isLogged ? HomePage : Auth} />
 					{/* add routes without layouts */}
 					<Route path="/edit_user/:id" component={EditUser} exact />
 					<Route path="/complaint" exact component={SendComplaint} />

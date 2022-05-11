@@ -36,7 +36,7 @@ export default function Login() {
       setUser({...user, err:'', success: res.data.msg})
       localStorage.setItem('firstLogin', true)
       dispatch(dispatchLogin())
-      history.push("/profile")
+      history.push("/")
     }catch(err){
       err.response.data.msg &&
       setUser({...user, err: err.response.data.msg, success: ''})
