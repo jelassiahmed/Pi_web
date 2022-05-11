@@ -44,7 +44,7 @@ function Map() {
                     key={id}
                     icon={{
                         url:img,
-                        scaledSize:  new window.google.maps.Size(150,130),
+                        scaledSize:  new window.google.maps.Size(30,30),
                         rigin: new window.google.maps.Point(0, 0),
                         optimized: false,
                         anchor: new window.google.maps.Point(0, 32),
