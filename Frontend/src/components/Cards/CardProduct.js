@@ -59,7 +59,7 @@ export default function CardProduct() {
     let msg;
 
     useEffect(() => {
-        const interval = setInterval(relaodtimer, 1000);
+        const interval = setInterval(relaodtimer, 100000);
         return () => {
             clearInterval(interval);}
     }, []);
@@ -98,7 +98,7 @@ export default function CardProduct() {
      * Ajout,Modification
      * d'une manière dynamique
      */
-    /*for (var i in productstimer) {
+    for (var i in productstimer) {
         for (var j in products) {
             if (productstimer[i]['_id'] == products[j]['_id']) {
                 if (products[j]['Categorie']['name'] != productstimer[i]['Categorie']['name'])
