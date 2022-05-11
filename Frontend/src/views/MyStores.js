@@ -84,6 +84,15 @@ export default function Store() {
 											</div>
 										);
 									})}
+									{StoreInfo.length < 2 ? (
+										<div>
+											<Link to="/create-store">
+												<i className="fa fa-plus"></i>
+											</Link>
+										</div>
+									) : (
+										""
+									)}
 								</div>
 							</div>
 						</div>
@@ -141,6 +150,11 @@ export default function Store() {
 									<h1 className="mx-auto text-xl py-3">
 										You Don't Have Any Stores yet. Create One?
 									</h1>
+									<div>
+										<Link to="/create-store">
+											<i className="fa fa-plus"></i>
+										</Link>
+									</div>
 								</div>
 							</div>
 						</section>
