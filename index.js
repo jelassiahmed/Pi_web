@@ -11,8 +11,9 @@ var feedbacksRouter = require("./routes/feedbacks");
 const path = require("path");
 const app = express();
 const http = require("http").Server(app);
-const io = require("socket.io")(http, { cors: { origin: "*" } });
-io.origins("*:*");
+const io = require("socket.io")(http, {
+	cors: { origin: "https://bazaartn.herokuapp.com" },
+});
 const chatService = require("./services/chat.service");
 
 app.use(cors());

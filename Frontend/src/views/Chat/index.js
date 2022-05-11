@@ -26,7 +26,7 @@ export default function Chat() {
 	const [socket, setSocket] = useState(null);
 
 	useEffect(() => {
-		const newSocket = io.connect("ws://localhost:5000");
+		const newSocket = io.connect("https://bazaartn.herokuapp.com");
 		setSocket(newSocket);
 
 		return () => {
