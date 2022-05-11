@@ -33,6 +33,7 @@ import Chat from "views/Chat";
 import IdentityVerif from "./views/IdentityVerif";
 import PrivacySettings from "./views/PrivacySettings";
 import AboutUs from "./views/AboutUs";
+import NewStore from "./views/NewStore";
 
 function App() {
 	const dispatch = useDispatch();
@@ -94,6 +95,7 @@ function App() {
 					<Route path="/store/:id" exact component={Store} />
 					<Route path="/chats/:id?" exact component={isLogged ? Chat : Auth} />
 					<Route path="/user-stores/:id?" exact component={MyStores} />
+					<Route path="/create-store" exact component={NewStore} />
 					<Route path="/profile" exact component={isLogged ? Profile : Auth} />
 					<Route path="/" exact component={HomePage} />
 					{/* add redirect for first page */}
