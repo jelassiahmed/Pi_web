@@ -63,42 +63,42 @@ router.post('/add',  upload.array('multi_files'), async function (req, res) {
         );
         for(var file in req.files) {
             const cloud = await cloudinaryspeaky.v2.uploader.upload(req.files[file]['path'])
-            prod.Images.push(new Image({img: cloud.url}));
+            prod.Images.push(new Image({img: cloud.secure_url}));
         }
         prod.save();
-    res.json({msg: "Added!"})
-}catch(err){
-    return res.status(500).json({msg: err.message})
-}
+        res.json({msg: "Added!"})
+    }catch(err){
+        return res.status(500).json({msg: err.message})
+    }
 });
 
 router.post('/update', upload.array('multi_files'), async function (req, res) {
-   try {
-    var cat=new Categorie(
-        {
-            name:req.body.categorie
+    try {
+        var cat=new Categorie(
+            {
+                name:req.body.categorie
+            }
+        );
+        const findproduct = Product.findByIdAndUpdate(req.body.id_p,
+            {
+                Price:req.body.price,
+                Categorie:cat,
+                Description:req.body.description,
+                Etat:req.body.etat
+            });
+        const docproduct = await findproduct.exec();
+        if(req.files.length) {
+            docproduct.Images=[];
+            for (var file in req.files) {
+                const cloud = await cloudinaryspeaky.v2.uploader.upload(req.files[file]['path'])
+                docproduct.Images.push(new Image({img: cloud.secure_url}));
+            }
         }
-    );
-    const findproduct = Product.findByIdAndUpdate(req.body.id_p,
-        {
-            Price:req.body.price,
-            Categorie:cat,
-            Description:req.body.description,
-            Etat:req.body.etat
-        });
-    const docproduct = await findproduct.exec();
-    if(req.files.length) {
-        docproduct.Images=[];
-        for (var file in req.files) {
-            const cloud = await cloudinaryspeaky.v2.uploader.upload(req.files[file]['path'])
-            docproduct.Images.push(new Image({img: cloud.url}));
-        }
+        await docproduct.save();
+        res.json({msg: "Updated!"})
+    }catch(err){
+        return res.status(500).json({msg: err.message})
     }
-    await docproduct.save();
-    res.json({msg: "Updated!"})
-}catch(err){
-    return res.status(500).json({msg: err.message})
-}
 });
 
 router.post('/delete', async function (req, res) {
