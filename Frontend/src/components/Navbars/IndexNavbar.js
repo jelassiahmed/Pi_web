@@ -5,18 +5,17 @@ import { Link } from "react-router-dom";
 
 import IndexDropdown from "components/Dropdowns/IndexDropdown.js";
 import UserDropdown from "../Dropdowns/UserDropdown";
-import {useSelector} from "react-redux";
-import logo1 from '../../assets/img/baazar_logo.jpg';
+import { useSelector } from "react-redux";
+import logo1 from "../../assets/img/baazar_logo.jpg";
 
 export default function Navbar(props) {
 	const [navbarOpen, setNavbarOpen] = React.useState(false);
-	const auth = useSelector(state => state.auth)
-	const {user , isLogged} = auth
+	const auth = useSelector((state) => state.auth);
+	const { user, isLogged } = auth;
 	const [logo, setLogo] = React.useState(logo1);
 	const userLink = () => {
-		return(
-			<UserDropdown/>)
-	}
+		return <UserDropdown />;
+	};
 
 	return (
 		<>
@@ -28,8 +27,8 @@ export default function Navbar(props) {
 							className="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
 						>
 							<div class="avatar">
-									<img src={logo} style={{ width: "50px", height: "50px" }} />
-									{/* <p className="text-xl text-white">Baazar</p> */}
+								<img src={logo} style={{ width: "50px", height: "50px" }} />
+								{/* <p className="text-xl text-white">Baazar</p> */}
 							</div>
 						</Link>
 						<button
@@ -48,26 +47,37 @@ export default function Navbar(props) {
 						id="example-navbar-warning"
 					>
 						<ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-							{
-								isLogged
-									? userLink()
-									:<li className="flex items-center">
-										<Link
-											className="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
-											to="/auth/login"
-										>
-											<i className="far fa-user"></i>
-										</Link>
-									</li>
-
-							}
+							{isLogged ? (
+								userLink()
+							) : (
+								<li className="flex items-center">
+									<Link
+										className="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+										to="/auth/login"
+									>
+										<i className="far fa-user"></i>
+									</Link>
+								</li>
+							)}
 
 							<li className="flex items-center">
 								<Link to="/Contact">
-									<a
-										className="bg-lightBlue-500 text-white active:bg-lightBlue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
-									>
+									<a className="bg-lightBlue-500 text-white active:bg-lightBlue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150">
 										<i className="fas fa-arrow-alt-circle-down"></i> Contact Us
+									</a>
+								</Link>
+							</li>
+							<li>
+								<Link to="/chats">
+									<a className="bg-lightBlue-500 text-white active:bg-lightBlue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150">
+										<i className="fas fa-arrow-alt-circle-down"></i> Chats
+									</a>
+								</Link>
+							</li>
+							<li>
+								<Link to="/user-stores">
+									<a className="bg-lightBlue-500 text-white active:bg-lightBlue-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150">
+										<i className="fas fa-arrow-alt-circle-down"></i> My Stores
 									</a>
 								</Link>
 							</li>

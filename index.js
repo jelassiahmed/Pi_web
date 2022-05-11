@@ -12,6 +12,7 @@ const path = require("path");
 const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http, { cors: { origin: "*" } });
+io.origins("*:*");
 const chatService = require("./services/chat.service");
 
 app.use(cors());
@@ -46,13 +47,12 @@ mongoose.connect(
 		console.log("Connected to mongodb");
 	}
 );
-if(process.env.NODE_ENV === "production"){
-	app.use(express.static('./Frontend/build'));
-	app.get('*', (req, res) => {
-		res.sendFile(path.resolve(__dirname, 'Frontend', 'build', 'index.html'));
-	})
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static("./Frontend/build"));
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "Frontend", "build", "index.html"));
+	});
 }
-
 
 io.on("connect", (socket) => {
 	socket.on("joinRoom", ({ userId, room }) => {
