@@ -16,9 +16,7 @@ import { Redirect, Route } from "react-router";
 import Admin from "./layouts/Admin";
 import Auth from "./layouts/Auth";
 import ActivationEmail from "./views/auth/ActiviationEmail";
-import Landing from "./views/Landing";
 import Profile from "./views/Profile";
-import Index from "./views/Index.js";
 import ResetPassword from "./views/auth/ResetPassword";
 import EditUser from "./views/EditUser";
 import SendComplaint from "./views/complaint/SendComplaint";
@@ -34,6 +32,7 @@ import IdentityVerif from "./views/IdentityVerif";
 import PrivacySettings from "./views/PrivacySettings";
 import AboutUs from "./views/AboutUs";
 import NewStore from "./views/NewStore";
+import ProductsPage from "./views/ProductsPage";
 
 function App() {
 	const dispatch = useDispatch();
@@ -79,6 +78,7 @@ function App() {
 					<Route path="/complaint" exact component={SendComplaint} />
 					<Route path="/AboutUs" exact component={AboutUs} />
 					<Route path="/message" exact component={SendMessage} />
+					<Route path="/ProductsPage" exact component={ProductsPage} />
 					<Route path="/Contact" exact component={Contact} />
 					<Route path="/PrivacySettings" exact component={PrivacySettings} />
 					<Route path="/mycomplaints" exact component={MyComplaints} />
@@ -91,7 +91,6 @@ function App() {
 						exact
 						component={ActivationEmail}
 					/>
-					<Route path="/landing" exact component={Landing} />
 					<Route path="/store/:id" exact component={Store} />
 					<Route path="/chats/:id?" exact component={isLogged ? Chat : Auth} />
 					<Route path="/user-stores/:id?" exact component={MyStores} />

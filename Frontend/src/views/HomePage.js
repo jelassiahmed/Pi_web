@@ -3,7 +3,6 @@ import Navbar from '../components/Navbars/IndexNavbar';
 import Carousel from '../components/HomePage/Carousel';
 import Stats from '../components/HomePage/Stats';
 import CarouselProducts from '../components/Product/CarouselProducts';
-import 'flowbite';
 import Contact from './contactUs/Contact';
 import PromoProducts from '../components/HomePage/PromoProducts';
 import DiveIn from '../components/HomePage/DiveIn';
