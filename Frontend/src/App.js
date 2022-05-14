@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import {
 	BrowserRouter,
 	BrowserRouter as Router,
@@ -34,6 +34,7 @@ import AboutUs from "./views/AboutUs";
 import NewStore from "./views/NewStore";
 import ProductsPage from "./views/Products/ProductsPage";
 import ProductDetails from "./views/Products/ProductDetails";
+import Navbar from "components/AANew/NavBar/NavBar";
 
 function App() {
 	const dispatch = useDispatch();
@@ -66,8 +67,26 @@ function App() {
 	}, [token, dispatch]);
 
 	const { isLogged } = auth;
+	// Cart 
+  const [cart, setCart] = useState([]);
 
+  const addToCart = (item) => {
+      if (cart.indexOf(item) !== -1) return;
+      setCart([...cart, item]);
+  }
+
+  const handleChange = (item, d) => {
+    const ind = cart.indexOf(item);
+    const arr = cart;
+    arr[ind].amount += d;
+
+    if (arr[ind].amount === 0) arr[ind].amount = 1;
+    setCart([...arr]);
+
+  };
 	return (
+		<>
+		<Navbar cart={cart} setCart={setCart} handleChange={handleChange} size={cart.length} />
 		<Router>
 			<BrowserRouter>
 				<Switch>
@@ -99,14 +118,15 @@ function App() {
 					<Route path="/" exact component={HomePage} />
 					
 					{/* Products Routes */}
-					<Route path="/ProductsPage" exact component={ProductsPage} />
-					<Route path="/ProductDetails" exact component={ProductDetails} />
-
+					{/* <Route path="/ProductsPage" render={(props)=><ProductDetails {...props} addToCart={addToCart}  />}/> */}
+					<Route path="/ProductsPage"  component={(props)=><ProductsPage {...props} addToCart={addToCart}  />} />
+					<Route path="/ProductDetails/:id" exact component={(props)=><ProductDetails {...props} addToCart={addToCart}  />} />
 					{/* add redirect for first page */}
 					<Redirect from="*" to="/" />
 				</Switch>
 			</BrowserRouter>
 		</Router>
+		</>
 	);
 }
 
