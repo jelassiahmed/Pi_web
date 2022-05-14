@@ -28,8 +28,26 @@ const products = [
   // More products...
 ]
 
-export default function ShoppingCarts1() {
+export default function ShoppingCarts1({cart,setCart,handleChange,size}) {
   const [open, setOpen] = useState(false)
+  const [price, setPrice] = useState(0);
+
+
+  const handleRemove = (id) => {
+    const arr = cart.filter((item) => item.id !== id);
+    setCart(arr);
+    handlePrice();
+  };
+
+  useEffect(() => {
+    handlePrice();
+  });
+
+  const handlePrice = () => {
+    let ans = 0;
+    cart.map((item) => (ans += item.amount * item.price));
+    setPrice(ans);
+  };
 
   return (
     <>
@@ -41,7 +59,7 @@ export default function ShoppingCarts1() {
               aria-hidden="true"
               onClick={() => setOpen(!open)}
             />
-            <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+            <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{size}</span>
             <span className="sr-only">items in cart, view bag</span>
           </a>
         </div>
@@ -93,12 +111,12 @@ export default function ShoppingCarts1() {
                           <div className="mt-8">
                             <div className="flow-root">
                               <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                {products.map((product) => (
+                                {cart.map((product) => (
                                   <li key={product.id} className="flex py-6">
                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                       <img
-                                        src={product.imageSrc}
-                                        alt={product.imageAlt}
+                                        src={product.img}
+                                        alt={product.img}
                                         className="h-full w-full object-cover object-center"
                                       />
                                     </div>
@@ -107,19 +125,24 @@ export default function ShoppingCarts1() {
                                       <div>
                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                           <h3>
-                                            <a href={product.href}> {product.name} </a>
+                                            <a href='#'> {product.name} </a>
                                           </h3>
-                                          <p className="ml-4">{product.price}</p>
+                                          <p className="ml-4">{product.title}</p>
                                         </div>
-                                        <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                                       </div>
                                       <div className="flex flex-1 items-end justify-between text-sm">
-                                        <p className="text-gray-500">Qty {product.quantity}</p>
-
-                                        <div className="flex">
+                                        {/* <p className="text-gray-500">Qty {product.amount}</p> */}
+                                        <div>
+                                          <button onClick={() => handleChange(product, 1)}>+</button>
+                                          <button class="w-12 py-3 text-xs text-center border-gray-200 rounded no-spinners">{product.amount}</button>
+                                          <button onClick={() => handleChange(product, -1)}>-</button>
+                                        </div>
+                                        <div className="flex flex-col">
+                                        <p className="text-base font-black leading-none text-gray-800">${product.price}</p>
                                           <button
                                             type="button"
                                             className="font-medium text-indigo-600 hover:text-indigo-500"
+                                            onClick={() => handleRemove(product.id)}
                                           >
                                             Remove
                                           </button>
@@ -136,7 +159,7 @@ export default function ShoppingCarts1() {
                         <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                           <div className="flex justify-between text-base font-medium text-gray-900">
                             <p>Subtotal</p>
-                            <p>$262.00</p>
+                            <p>${price}</p>
                           </div>
                           <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                           <div className="mt-6">

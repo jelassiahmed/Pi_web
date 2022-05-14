@@ -141,7 +141,7 @@ const products = [
   },
   // More products...
 ]
-export default function Navbar() {
+export default function Navbar({cart,setCart,handleChange,size}) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -447,7 +447,7 @@ export default function Navbar() {
                     </a>
                   </div>
 
-                  <ShoppingCarts1 />
+                  <ShoppingCarts1 cart={cart} setCart={setCart} handleChange={handleChange} size={size} />
                   
                 </div>
               </div>

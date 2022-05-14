@@ -32,7 +32,8 @@ import IdentityVerif from "./views/IdentityVerif";
 import PrivacySettings from "./views/PrivacySettings";
 import AboutUs from "./views/AboutUs";
 import NewStore from "./views/NewStore";
-import ProductsPage from "./views/ProductsPage";
+import ProductsPage from "./views/Products/ProductsPage";
+import ProductDetails from "./views/Products/ProductDetails";
 
 function App() {
 	const dispatch = useDispatch();
@@ -78,7 +79,6 @@ function App() {
 					<Route path="/complaint" exact component={SendComplaint} />
 					<Route path="/AboutUs" exact component={AboutUs} />
 					<Route path="/message" exact component={SendMessage} />
-					<Route path="/ProductsPage" exact component={ProductsPage} />
 					<Route path="/Contact" exact component={Contact} />
 					<Route path="/PrivacySettings" exact component={PrivacySettings} />
 					<Route path="/mycomplaints" exact component={MyComplaints} />
@@ -97,6 +97,11 @@ function App() {
 					<Route path="/create-store" exact component={NewStore} />
 					<Route path="/profile" exact component={isLogged ? Profile : Auth} />
 					<Route path="/" exact component={HomePage} />
+					
+					{/* Products Routes */}
+					<Route path="/ProductsPage" exact component={ProductsPage} />
+					<Route path="/ProductDetails" exact component={ProductDetails} />
+
 					{/* add redirect for first page */}
 					<Redirect from="*" to="/" />
 				</Switch>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from 'components/AANew/NavBar/NavBar'
 
 const ProductOverviews2 = () => {
     const [rotate, setRotate] = useState(false);
@@ -17,7 +16,6 @@ const ProductOverviews2 = () => {
 
     return (
       <>
-        <Navbar />
         <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4 ">
             <div className="flex justify-center items-center lg:flex-row flex-col gap-8">
                 {/* <!-- Description Div --> */}
