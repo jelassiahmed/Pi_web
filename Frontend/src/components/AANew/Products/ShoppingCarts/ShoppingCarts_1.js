@@ -2,18 +2,20 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
-import ProductCheckout from 'components/AANew/ProductCheckout/ProductCheckout';
+//redux
+import { useSelector, useDispatch } from "react-redux";
 
 
-export default function ShoppingCarts1({cart,setCart,handleChange,size}) {
+
+export default function ShoppingCarts1() {
+
   const [open, setOpen] = useState(false)
   const [price, setPrice] = useState(0);
+  //redux
+  const cart = useSelector((state) => state.cartReducer);
+  const dispatch = useDispatch();
 
-  const handleRemove = (id) => {
-    const arr = cart.filter((item) => item.id !== id);
-    setCart(arr);
-    handlePrice();
-  };
+
 
   const handlePrice = () => {
     let ans = 0;
@@ -21,11 +23,11 @@ export default function ShoppingCarts1({cart,setCart,handleChange,size}) {
     setPrice(ans);
   };
 
+
   useEffect(() => {
     handlePrice();
-  });
+  })
 
-  
 
   return (
     <>
@@ -37,7 +39,7 @@ export default function ShoppingCarts1({cart,setCart,handleChange,size}) {
               aria-hidden="true"
               onClick={() => setOpen(!open)}
             />
-            <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{size}</span>
+            <span className="ml-2 text-sm font-medium text-ring-pink-700 group-hover:text-gray-800">{cart.length}</span>
             <span className="sr-only">items in cart, view bag</span>
           </a>
         </div>
@@ -111,16 +113,26 @@ export default function ShoppingCarts1({cart,setCart,handleChange,size}) {
                                       <div className="flex flex-1 items-end justify-between text-sm">
                                         {/* <p className="text-gray-500">Qty {product.amount}</p> */}
                                         <div>
-                                          <button onClick={() => handleChange(product, 1)}>+</button>
+                                          <button
+                                            onClick={() => dispatch({ type: "INCREASE_QTY", payload: product })}>+</button>
                                           <button class="w-12 py-3 text-xs text-center border-gray-200 rounded no-spinners">{product.amount}</button>
-                                          <button onClick={() => handleChange(product, -1)}>-</button>
+                                          <button
+                                            onClick={() => 
+                                              {
+                                                if (product.amount > 1) {
+                                                  dispatch({ type: "DECREASE_QTY", payload: product })
+                                                } else {
+                                                  dispatch({ type: "REMOVE_FROM_CART", payload: product })
+                                                }
+                                              }
+                                            }>-</button>
                                         </div>
                                         <div className="flex flex-col">
-                                        <p className="text-base font-black leading-none text-gray-800">${product.price}</p>
+                                          <p className="text-base font-black leading-none text-gray-800">${product.price}</p>
                                           <button
                                             type="button"
                                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                                            onClick={() => handleRemove(product.id)}
+                                            onClick={() => dispatch({ type: "REMOVE_FROM_CART", payload: product })}
                                           >
                                             Remove
                                           </button>
