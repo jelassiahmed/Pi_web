@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/solid'
 import { RadioGroup } from '@headlessui/react'
-import Navbar from 'components/AANew/NavBar/NavBar'
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -67,7 +66,6 @@ export default function ProductOverviews1() {
 
   return (
     <>
-    <Navbar />
     <div className="bg-white">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">

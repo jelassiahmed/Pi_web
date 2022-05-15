@@ -2,36 +2,12 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
+import ProductCheckout from 'components/AANew/ProductCheckout/ProductCheckout';
 
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
 
 export default function ShoppingCarts1({cart,setCart,handleChange,size}) {
   const [open, setOpen] = useState(false)
   const [price, setPrice] = useState(0);
-
 
   const handleRemove = (id) => {
     const arr = cart.filter((item) => item.id !== id);
@@ -39,15 +15,17 @@ export default function ShoppingCarts1({cart,setCart,handleChange,size}) {
     handlePrice();
   };
 
-  useEffect(() => {
-    handlePrice();
-  });
-
   const handlePrice = () => {
     let ans = 0;
     cart.map((item) => (ans += item.amount * item.price));
     setPrice(ans);
   };
+
+  useEffect(() => {
+    handlePrice();
+  });
+
+  
 
   return (
     <>

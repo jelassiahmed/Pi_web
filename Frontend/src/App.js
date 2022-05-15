@@ -35,6 +35,7 @@ import NewStore from "./views/NewStore";
 import ProductsPage from "./views/Products/ProductsPage";
 import ProductDetails from "./views/Products/ProductDetails";
 import Navbar from "components/AANew/NavBar/NavBar";
+import ProductCheckout from "components/AANew/ProductCheckout/ProductCheckout";
 
 function App() {
 	const dispatch = useDispatch();
@@ -121,6 +122,7 @@ function App() {
 					{/* <Route path="/ProductsPage" render={(props)=><ProductDetails {...props} addToCart={addToCart}  />}/> */}
 					<Route path="/ProductsPage"  component={(props)=><ProductsPage {...props} addToCart={addToCart}  />} />
 					<Route path="/ProductDetails/:id" exact component={(props)=><ProductDetails {...props} addToCart={addToCart}  />} />
+					<Route path="/ProductCheckout" exact component={(props) => <ProductCheckout {...props} />} />
 					{/* add redirect for first page */}
 					<Redirect from="*" to="/" />
 				</Switch>

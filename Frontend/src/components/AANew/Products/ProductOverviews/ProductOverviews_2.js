@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react";
-
 const ProductOverviews2 = ({addToCart,product}) => {
     const [rotate, setRotate] = useState(false);
-    const [count, setCount] = useState(product.amount);
+    // const [count, setCount] = useState(product.amount);
     const [prod, setProd] = useState(product);
 
-    const addCount = () => {
-        setCount((prev) => prev + 1);
-        prod.amount = count;
-        console.log("+++",prod);
-    };
+    // const addCount = () => {
+    //     setCount((prev) => prev + 1);
+    //     prod.amount = count;
+    //     console.log("+++",prod);
+    // };
 
-    const minusCount = () => {
-        if (prod.amount > 0) {
-            setCount((prev) => prev - 1);
-            prod.amount = count;
-            console.log("---",prod);
-        }
-    };
-    useEffect(() => {} , [count,prod,prod.amount]);
+    // const minusCount = () => {
+    //     if (prod.amount > 0) {
+    //         setCount((prev) => prev - 1);
+    //         prod.amount = count;
+    //         console.log("---",prod);
+    //     }
+    // };
+    useEffect(() => {} , [prod]);
     return (
       <>
         <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4 ">
@@ -69,7 +68,7 @@ const ProductOverviews2 = ({addToCart,product}) => {
                     <p className=" font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6 ">${prod.price}</p>
 
                     <div className="lg:mt-11 mt-10">
-                        <div className="flex flex-row justify-between">
+                        {/* <div className="flex flex-row justify-between">
                             <p className=" font-medium text-base leading-4 text-gray-600">Select quantity</p>
                             <div className="flex">
                                 <span onClick={minusCount} className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer border border-gray-300 border-r-0 w-7 h-7 flex items-center justify-center pb-1">
@@ -80,7 +79,7 @@ const ProductOverviews2 = ({addToCart,product}) => {
                                     +
                                 </span>
                             </div>
-                        </div>
+                        </div> */}
                         <hr className=" bg-gray-200 w-full my-2" />
                         <div className=" flex flex-row justify-between items-center mt-4">
                             <p className="font-medium text-base leading-4 text-gray-600">Dimensions</p>
