@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 const store = new mongoose.Schema(
 	{
@@ -29,8 +29,5 @@ const store = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
-var str = mongoose.model("Store", store);
-module.exports = {
-	Store: str,
-	Storeschema: store,
-};
+const Store = mongoose.model("Store", store);
+module.exports = Store;

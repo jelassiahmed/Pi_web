@@ -5,9 +5,6 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const Complaint = require("./routes/Complaint");
-var productsRouter = require("./routes/products");
-var ratingsRouter = require("./routes/ratings");
-var feedbacksRouter = require("./routes/feedbacks");
 const path = require("path");
 const app = express();
 const http = require("http").Server(app);
@@ -28,11 +25,9 @@ app.use(cookieParser());
 // Routes
 app.use("/user", require("./routes/userRouter"));
 app.use("/api", require("./routes/upload"));
-app.use("/products", productsRouter);
-app.use("/ratings", ratingsRouter);
-app.use("/feedbacks", feedbacksRouter);
+app.use("/products", require("./routes/product.router"));
 app.use("/complaint", Complaint);
-app.use("/store/api", require("./routes/store.router"));
+app.use("/store", require("./routes/store.router"));
 app.use("/chat", require("./routes/chat.router"));
 
 //Connect to mongodb
