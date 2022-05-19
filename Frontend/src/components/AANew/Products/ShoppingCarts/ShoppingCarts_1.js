@@ -49,9 +49,10 @@ export default function ShoppingCarts1() {
     if(response.statusCode === 500) return;
     
     const body = await response.json();
-    console.log('data==',body);
 
-    window.location.href = body.url
+    window.location.href = body.url;
+
+    console.log('data==',body);
   }
 
   useEffect(() => {

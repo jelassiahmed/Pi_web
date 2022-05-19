@@ -36,6 +36,9 @@ import ProductsPage from "./views/Products/ProductsPage";
 import ProductDetails from "./views/Products/ProductDetails";
 import Navbar from "components/AANew/NavBar/NavBar";
 import ProductCheckout from "components/AANew/ProductCheckout/ProductCheckout";
+import PaymentSucess from "components/AANew/ProductCheckout/PaymentSucess";
+import PaymentError from "components/AANew/ProductCheckout/PaymentError";
+import NotFound404 from "components/AANew/404NotFound/404NotFound";
 
 function App() {
 	const dispatch = useDispatch();
@@ -87,7 +90,7 @@ function App() {
   };
 	return (
 		<>
-		<Navbar cart={cart} setCart={setCart} handleChange={handleChange} size={cart.length} />
+		{/* <Navbar/> */}
 		<Router>
 			<BrowserRouter>
 				<Switch>
@@ -122,9 +125,15 @@ function App() {
 					{/* <Route path="/ProductsPage" render={(props)=><ProductDetails {...props} addToCart={addToCart}  />}/> */}
 					<Route path="/ProductsPage"  component={ProductsPage} />
 					<Route path="/ProductDetails/:id" exact component={ProductDetails} />
-					<Route path="/ProductCheckout" exact component={ProductCheckout} />
+					<Route path="/ProductCheckout" exact component={ProductCheckout} />					
+					<Route path="/PaymentSucess" exact component={PaymentSucess} />					
+					<Route path="/PaymentError" exact component={PaymentError} />					
+
+					{/* 404 Not Found */}
+					<Route path="/NotFound404" exact component={NotFound404} />
+					{/* My stores */}
 					{/* add redirect for first page */}
-					<Redirect from="*" to="/" />
+					<Redirect from="*" to="/NotFound404" />
 				</Switch>
 			</BrowserRouter>
 		</Router>

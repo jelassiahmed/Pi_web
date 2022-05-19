@@ -4,7 +4,6 @@ import {useHistory, Link } from "react-router-dom";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 
-
 const Grid1 = () => {
     //redux
     const dispatch = useDispatch();
@@ -18,6 +17,7 @@ const Grid1 = () => {
  
 
     return (
+        
         <div className=" 2xl:container 2xl:mx-auto">
             <div className=" bg-gray-50 text-center lg:py-10 md:py-8 py-6">
                 <p className=" w-10/12 mx-auto md:w-full  font-semibold lg:text-4xl text-3xl lg:leading-9 md:leading-7 leading-9 text-center text-gray-800">Summer Collection Vol-1</p>

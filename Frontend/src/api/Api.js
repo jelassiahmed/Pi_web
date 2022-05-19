@@ -16,7 +16,12 @@ export const sendMessage = (id,msg) => axios.patch(`/complaint/send_msg/${id}`,m
 // export const fetchProductById = (id)=> axios.get(`${url}/products/${id}`);
 // export const smartFetchProduct = (pagination)=> axios.post(`${url}/products/page`, pagination);
 // export const getNbPages=()=> axios.get(`${url}/products/page/1`);
-export const getAllProducts = () => axios.get(`${url}/products/getjson`);
 
 //update store verification
-export const verifyStore = (id) => axios.patch(`${url}/store/api/verify/${id}`);
+export const verifyStore = (id) => axios.patch(`/store/api/verify/${id}`);
+export const getStoreByUser = (id) => axios.get(`/store/api/owner/${id}`);
+export const addStore = (newStore) => axios.post(`/store/api/`, newStore);
+export const getOneStore = (id) => axios.get(`/store/api/${id}`);
+export const updateStore = (id,updateStore) => axios.patch(`/store/api/${id}`,updateStore);
+export const deleteStore = (id) => axios.delete(`/store/api/${id}`);
+export const getAllStores = () => axios.get(`/store/api/`);
