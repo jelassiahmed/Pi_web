@@ -12,7 +12,8 @@ const path = require("path");
 const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http, {
-	cors: { origin: "https://bazaartn.herokuapp.com" },
+
+	cors: { origin: "https://bazaartn.herokuapp.com"},
 });
 const chatService = require("./services/chat.service");
 
@@ -93,4 +94,61 @@ io.on("connect", (socket) => {
 const PORT = process.env.PORT || 5000;
 http.listen(PORT, () => {
 	console.log("Server is running on port", PORT);
+});
+
+//Stripe
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
+
+
+// app.use(
+// 	cors({
+// 	  origin: "http://localhost:3000",
+// 	})
+//   )
+app.post("/create-checkout-session", async (req, res) => {
+	if (req.method === 'POST') {
+		try {
+		  const params = {
+			submit_type: 'pay',
+			mode: 'payment',
+			payment_method_types: ['card'],
+			billing_address_collection: 'auto',
+			// shipping_options: [
+			//   { shipping_rate: 'shr_1Kn3IaEnylLNWUqj5rqhg9oV' },
+			// ],
+			line_items: req.body.map((item) => {
+			//   const img = item.image[0].asset._ref;
+			//   const newImage = img.replace('image-', 'https://cdn.sanity.io/images/vfxfwnaw/production/').replace('-webp', '.webp');
+	
+			  return {
+				price_data: { 
+				  currency: 'usd',
+				  product_data: { 
+					name: item.title,
+					// images: [newImage],
+				  },
+				  unit_amount: item.price * 100,
+				},
+				adjustable_quantity: {
+				  enabled:true,
+				  minimum: 1,
+				},
+				quantity: item.amount
+			  }
+			}),
+			success_url: `${req.headers.origin}/success`,
+			cancel_url: `${req.headers.origin}/canceled`,
+		  }
+	
+		  // Create Checkout Sessions from body params.
+		  const session = await stripe.checkout.sessions.create(params);
+	
+		  res.status(200).json({url : session.url});
+		} catch (err) {
+		  res.status(err.statusCode || 500).json(err.message);
+		}
+	  } else {
+		res.setHeader('Allow', 'POST');
+		res.status(405).end('Method Not Allowed');
+	  }
 });

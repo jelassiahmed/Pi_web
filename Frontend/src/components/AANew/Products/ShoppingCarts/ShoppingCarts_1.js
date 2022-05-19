@@ -1,9 +1,10 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useState } from 'react'
+import  React,{ Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
+import {useHistory, Link } from "react-router-dom";
 //redux
 import { useSelector, useDispatch } from "react-redux";
+import getStripe from 'api/getStripe';
 
 
 
@@ -15,7 +16,7 @@ export default function ShoppingCarts1() {
   const cart = useSelector((state) => state.cartReducer);
   const dispatch = useDispatch();
 
-
+ 
 
   const handlePrice = () => {
     let ans = 0;
@@ -24,11 +25,38 @@ export default function ShoppingCarts1() {
   };
 
 
+  
+  
+
+//   const goToCheckout = () => {
+    // localStorage.removeItem("cartItems");
+//     window.location.href = "/ProductCheckout";
+//     localStorage.setItem("cartItems", JSON.stringify(cart));
+// }
+  const handleCheckout = async() => {
+    localStorage.removeItem("cartItems");
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+    console.log('cart==',cart);
+    const stripe = await getStripe();
+    const response = await fetch("http://localhost:3000/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cart),
+    });
+
+    if(response.statusCode === 500) return;
+    
+    const body = await response.json();
+    console.log('data==',body);
+
+    window.location.href = body.url
+  }
+
   useEffect(() => {
     handlePrice();
   })
-
-
   return (
     <>
       <div className="flex items-center justify-center py-8">
@@ -153,12 +181,14 @@ export default function ShoppingCarts1() {
                           </div>
                           <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                           <div className="mt-6">
-                            <a
-                              href="#"
+                            {/* <button
+                              onClick={() => {goToCheckout()}}
                               className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                             >
                               Checkout
-                            </a>
+                            </button>
+                             */}
+                             <button onClick={() => handleCheckout()} className=" bg-transparent font-medium text-base leading-4 border-2 border-white py-3 w-full mt-2 text-dark">Checkout</button>
                           </div>
                           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                             <p>

@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
-const ProductOverviews2 = ({addToCart,product}) => {
+import { useSelector, useDispatch } from "react-redux";
+
+
+const ProductOverviews2 = ({product}) => {
     const [rotate, setRotate] = useState(false);
     // const [count, setCount] = useState(product.amount);
     const [prod, setProd] = useState(product);
-
-    // const addCount = () => {
-    //     setCount((prev) => prev + 1);
-    //     prod.amount = count;
-    //     console.log("+++",prod);
-    // };
-
-    // const minusCount = () => {
-    //     if (prod.amount > 0) {
-    //         setCount((prev) => prev - 1);
-    //         prod.amount = count;
-    //         console.log("---",prod);
-    //     }
-    // };
+//redux
+const dispatch = useDispatch();
+  
     useEffect(() => {} , [prod]);
     return (
       <>
@@ -90,7 +82,7 @@ const ProductOverviews2 = ({addToCart,product}) => {
                         <hr className=" bg-gray-200 w-full mt-4" />
                     </div>
 
-                    <button onClick={() => addToCart(prod)} className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6">Add to shopping bag</button>
+                    <button onClick={() => dispatch({ type: "ADD_TO_CART", payload: prod })} className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6">Add to shopping bag</button>
                 </div>
 
                 {/* <!-- Preview Images Div For larger Screen--> */}

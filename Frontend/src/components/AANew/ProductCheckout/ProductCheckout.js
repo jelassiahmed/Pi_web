@@ -1,37 +1,51 @@
 import { useEffect, useState } from 'react'
-import data from '../Products/ProductGrids/data'
-
+//redux
+import { useSelector, useDispatch } from "react-redux";
 export default function ProductCheckout() {
     const [price, setPrice] = useState(0);
-    const [cart, setCart] = useState(data);
+    //redux
+//   const cart = useSelector((state) => state.cartReducer);
+  const [cart, setCart] = useState([]);
+  const dispatch = useDispatch();
 
-    const handleRemove = (id) => {
-        const arr = cart.filter((item) => item.id !== id);
-        setCart(arr);
-        handlePrice();
-    };
+  const handlePrice = () => {
+    let ans = 0;
+    cart.map((item) => (ans += item.amount * item.price));
+    setPrice(ans);
+  };
 
-    const handlePrice = () => {
-        let ans = 0;
-        cart.map((item) => (ans += item.amount * item.price));
-        setPrice(ans);
-    };
 
-    const handleChange = (item, d) => {
-        const ind = cart.indexOf(item);
-        const arr = cart;
-        arr[ind].amount += d;
-        if (arr[ind].amount === 0) arr[ind].amount = 1;
-        setCart([...arr]);
-      };
-
-    useEffect(() => {
-        handlePrice();
-    });
-
-    return (
+  useEffect(() => {
+      setCart(JSON.parse(localStorage.getItem("cartItems")));
+      console.log(cart);
+  },[])
+  
+  useEffect(() => {
+    handlePrice();
+  })
+  const ProductDisplay = () => (
+    <section>
+      <div className="product">
+        <img
+          src="https://i.imgur.com/EHyR2nP.png"
+          alt="The cover of Stubborn Attachments"
+        />
+        <div className="description">
+        <h3>Stubborn Attachments</h3>
+        <h5>$20.00</h5>
+        </div>
+      </div>
+      <form action="/create-checkout-session" method="POST">
+        <button type="submit">
+          Checkout
+        </button>
+      </form>
+    </section>
+  );
+  
+return (
         <>
-            <section>
+             <section>
                 <h1 className="sr-only">Checkout</h1>
                 <div className="relative mx-auto max-w-screen-2xl">
                     <div className="grid grid-cols-1 md:grid-cols-2">
@@ -64,7 +78,7 @@ export default function ProductCheckout() {
                                                             <p className="text-sm">{product.title}</p>
 
                                                             <dl className="mt-1 space-y-1 text-xs text-gray-500">
-                                                                {/* <div>
+                                                                <div>
                                                             <dt className="inline">Color:</dt>
                                                             <dd className="inline">Blue</dd>
                                                         </div>
@@ -72,11 +86,20 @@ export default function ProductCheckout() {
                                                         <div>
                                                             <dt className="inline">Size:</dt>
                                                             <dd className="inline">UK 10</dd>
-                                                        </div> */}
+                                                        </div> 
                                                                 <div>
-                                                                    <button onClick={() => handleChange(product, 1)}>+</button>
+                                                                    <button onClick={() => dispatch({ type: "INCREASE_QTY", payload: product })}>+</button>
                                                                     <button class="w-12 py-3 text-xs text-center border-gray-200 rounded no-spinners">{product.amount}</button>
-                                                                    <button onClick={() => handleChange(product, -1)}>-</button>
+                                                                    <button
+                                                                    onClick={() => 
+                                                                        {
+                                                                          if (product.amount > 1) {
+                                                                            dispatch({ type: "DECREASE_QTY", payload: product })
+                                                                          } else {
+                                                                            dispatch({ type: "REMOVE_FROM_CART", payload: product })
+                                                                          }
+                                                                        }
+                                                                      }>-</button>
                                                                 </div>
                                                             </dl>
                                                         </div>
@@ -89,7 +112,7 @@ export default function ProductCheckout() {
                                                         <button
                                                             type="button"
                                                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                                                            onClick={() => handleRemove(product.id)}
+                                                            onClick={() => dispatch({ type: "REMOVE_FROM_CART", payload: product })}
                                                         >
                                                             Remove
                                                         </button>

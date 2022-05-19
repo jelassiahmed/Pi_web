@@ -120,9 +120,9 @@ function App() {
 					
 					{/* Products Routes */}
 					{/* <Route path="/ProductsPage" render={(props)=><ProductDetails {...props} addToCart={addToCart}  />}/> */}
-					<Route path="/ProductsPage"  component={(props)=><ProductsPage {...props} addToCart={addToCart}  />} />
-					<Route path="/ProductDetails/:id" exact component={(props)=><ProductDetails {...props} addToCart={addToCart}  />} />
-					<Route path="/ProductCheckout" exact component={(props) => <ProductCheckout {...props} />} />
+					<Route path="/ProductsPage"  component={ProductsPage} />
+					<Route path="/ProductDetails/:id" exact component={ProductDetails} />
+					<Route path="/ProductCheckout" exact component={ProductCheckout} />
 					{/* add redirect for first page */}
 					<Redirect from="*" to="/" />
 				</Switch>

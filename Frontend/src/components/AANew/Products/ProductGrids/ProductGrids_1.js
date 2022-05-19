@@ -10,14 +10,13 @@ const Grid1 = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cartReducer);
     //redux
-
     const navigate = useHistory();
+
     const goToProductDetails = (id) => {
         navigate.push(`/ProductDetails/${id}`);
     }
-    useEffect(()=>{
-        console.log(cart)
-    })
+ 
+
     return (
         <div className=" 2xl:container 2xl:mx-auto">
             <div className=" bg-gray-50 text-center lg:py-10 md:py-8 py-6">
