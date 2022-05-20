@@ -13,10 +13,10 @@ import { Link } from "react-router-dom";
 export default function NewStore(props) {
 	const { user, isAdmin } = useSelector((state) => state.auth);
 	const navigate = useHistory();
-	const [image, setImage] = useState("");
+
+
 	const [imageCover, setImageCover] = useState(defaultImageCover);
 	const [imageProfile, setImageProfile] = useState(defaultImageProfile);
-
 	const [storeName, setstoreName] = useState("");
 	const [storeDescription, setstoreDescription] = useState("");
 	const [storeAddress, setstoreAddress] = useState("");
