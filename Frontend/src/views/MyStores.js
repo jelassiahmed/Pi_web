@@ -31,8 +31,8 @@ export default function Store() {
 	return (
 		<>
 			<div className="flex flex-col items-center justify-center mt-10">
-				<h1 className="lg:text-5xl md:text-4xl text-2xl font-bold leading-10 text-gray-800">{name} Store</h1>
-				<p className="text-base leading-normal text-center text-gray-600 mt-4 xl:w-1/2 w-10/12">We just got featured in the following magazines and it has been the most incredible journey. We work with the best fashion magazines across the world</p>
+				<h1 className="lg:text-5xl md:text-4xl text-2xl font-bold leading-10 text-gray-800">{name} Stores</h1>
+				<p className="text-base leading-normal text-center text-gray-600 mt-4 xl:w-1/2 w-10/12">We just got featured in the following magazines and it has been the most incredible journey. <br></br>We work with the best fashion magazines across the world</p>
 			</div>
 			<div className="flex flex-col mt-10">
 				{StoreInfo.map((el) => {
