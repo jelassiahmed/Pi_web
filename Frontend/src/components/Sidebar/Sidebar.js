@@ -29,7 +29,7 @@ export default function Sidebar() {
 						<div className="flex flex row justify-center">
 							<div class="avatar">
 								<div class="w-24 rounded">
-									<img src={logo} style={{ width: "50px", height: "50px" }} /><p className="text-xl">Baazar</p>
+									<img src={logo} style={{ width: "50px", height: "50px" }} /><p className="text-xl">Bazaar</p>
 								</div>
 							</div>
 						</div>

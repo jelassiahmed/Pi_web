@@ -292,7 +292,7 @@ export default function NewStore(props) {
 										<p><strong>Country</strong> refers to:  Tunisia</p>
 									</li>
 									<li>
-										<p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to baazartn.</p>
+										<p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to bazaartn.</p>
 									</li>
 									<li>
 										<p><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</p>
@@ -307,7 +307,7 @@ export default function NewStore(props) {
 										<p><strong>Third-party Social Media Service</strong> means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</p>
 									</li>
 									<li>
-										<p><strong>Website</strong> refers to baazartn, accessible from <a href="baazartn.com" rel="external nofollow noopener" target="_blank">baazartn.com</a></p>
+										<p><strong>Website</strong> refers to bazaartn, accessible from <a href="baazartn.com" rel="external nofollow noopener" target="_blank">baazartn.com</a></p>
 									</li>
 									<li>
 										<p><strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</p>
@@ -360,7 +360,7 @@ export default function NewStore(props) {
 										<p><strong>By email: baazartn@gmail.com</strong></p>
 									</li>
 									<li>
-										<p><strong>By visiting this page on our website: <a href="baazar.tn" rel="external nofollow noopener" target="_blank">baazar.tn</a></strong></p>
+										<p><strong>By visiting this page on our website: <a href="bazaar.tn" rel="external nofollow noopener" target="_blank">bazaar.tn</a></strong></p>
 									</li>
 								</ul>
 							</div>
@@ -409,7 +409,7 @@ export default function NewStore(props) {
 										</div>
 										{backtostore ?
 											<>
-												<h1 className="mt-8 md:mt-12 text-3xl lg:text-4xl font-semibold leading-10 text-center text-gray-800 text-center md:w-9/12 lg:w-7/12">Welcome to the coveted family of baazar!</h1>
+												<h1 className="mt-8 md:mt-12 text-3xl lg:text-4xl font-semibold leading-10 text-center text-gray-800 text-center md:w-9/12 lg:w-7/12">Welcome to the coveted family of bazaar!</h1>
 												<p className="mt-10 text-base leading-normal text-center text-gray-600 md:w-9/12 lg:w-7/12">After reviewing your data. <br></br>A confirmation email will be sended to your account, {user.email}.</p>
 												<div className="mt-12 md:mt-14 w-full flex justify-center">
 												<Link to='/user-stores'>

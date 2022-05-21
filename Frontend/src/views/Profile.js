@@ -1,10 +1,7 @@
-import React, {useState} from "react";
-
-import Navbar from "components/Navbars/AuthNavbar.js";
-import Footer from "components/Footers/Footer.js";
-import {isLength, isMatch} from "components/utils/validation/Validation"
-import {showSuccessMsg, showErrMsg} from "components/utils/notification/Notification"
-import {useSelector} from "react-redux";
+import React, { useState } from "react";
+import { isLength, isMatch } from "components/utils/validation/Validation"
+import { showSuccessMsg, showErrMsg } from "components/utils/notification/Notification"
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 
@@ -23,85 +20,84 @@ export default function Profile() {
 	const users = useSelector(state => state.users)
 
 
-	const{user} = auth
-	const [data,setData] = useState(initialState)
-	const {name,password, address, cf_password, err, success} = data
+	const { user } = auth
+	const [data, setData] = useState(initialState)
+	const { name, password, address, cf_password, err, success } = data
 	const [avatar, setAvatar] = useState(false)
 	const [loading, setLoading] = useState(false)
-	const changeAvatar = async(e) => {
+	const changeAvatar = async (e) => {
 		e.preventDefault()
 		try {
 			const file = e.target.files[0]
 
-			if(!file) return setData({...data, err: "No files were uploaded." , success: ''})
+			if (!file) return setData({ ...data, err: "No files were uploaded.", success: '' })
 
-			if(file.size > 1024 * 1024)
-				return setData({...data, err: "Size too large." , success: ''})
+			if (file.size > 1024 * 1024)
+				return setData({ ...data, err: "Size too large.", success: '' })
 
-			if(file.type !== 'image/jpeg' && file.type !== 'image/png')
-				return setData({...data, err: "File format is incorrect." , success: ''})
+			if (file.type !== 'image/jpeg' && file.type !== 'image/png')
+				return setData({ ...data, err: "File format is incorrect.", success: '' })
 
-			let formData =  new FormData()
+			let formData = new FormData()
 			formData.append('file', file)
 
 			setLoading(true)
 			const res = await axios.post('/api/upload_avatar', formData, {
-				headers: {'content-type': 'multipart/form-data', Authorization: token}
+				headers: { 'content-type': 'multipart/form-data', Authorization: token }
 			})
 
 			setLoading(false)
 			setAvatar(res.data.url)
 
 		} catch (err) {
-			setData({...data, err: err.response.data.msg , success: ''})
+			setData({ ...data, err: err.response.data.msg, success: '' })
 		}
 	}
 	const handleChange = e => {
-		const {name, value} = e.target
-		setData({...data, [name]: value, err: '', success: ''})
+		const { name, value } = e.target
+		setData({ ...data, [name]: value, err: '', success: '' })
 	}
 	const updateInfo = () => {
 		try {
-			axios.patch('/user/update',{
+			axios.patch('/user/update', {
 				name: name ? name : user.name,
-				address: address ? address: user.address,
+				address: address ? address : user.address,
 				avatar: avatar ? avatar : user.avatar
-			},{
-				headers: {Authorization: token}
+			}, {
+				headers: { Authorization: token }
 			})
 
-			setData({...data, err: '' , success: "Updated Success!"})
+			setData({ ...data, err: '', success: "Updated Success!" })
 
-		}catch(err){
-			setData({...data, err: err.response.data.msg , success: ''})
+		} catch (err) {
+			setData({ ...data, err: err.response.data.msg, success: '' })
 		}
 	}
 
 	const updatePassword = () => {
-		if(isLength(password))
-			return setData({...data, err: "Password must be at least 6 characters.", success: ''})
+		if (isLength(password))
+			return setData({ ...data, err: "Password must be at least 6 characters.", success: '' })
 
-		if(!isMatch(password, cf_password))
-			return setData({...data, err: "Password did not match.", success: ''})
+		if (!isMatch(password, cf_password))
+			return setData({ ...data, err: "Password did not match.", success: '' })
 
 		try {
-			axios.post('/user/reset', {password},{
-				headers: {Authorization: token}
+			axios.post('/user/reset', { password }, {
+				headers: { Authorization: token }
 			})
 
-			setData({...data, err: '' , success: "Updated Success!"})
+			setData({ ...data, err: '', success: "Updated Success!" })
 		} catch (err) {
-			setData({...data, err: err.response.data.msg , success: ''})
+			setData({ ...data, err: err.response.data.msg, success: '' })
 		}
 	}
 
 	const handleUpdate = () => {
-		if(name || avatar || address) updateInfo()
-		if(password) updatePassword()
+		if (name || avatar || address) updateInfo()
+		if (password) updatePassword()
 	}
 	return (
 		<>
-			<Navbar transparent />
 			<main className="profile-page">
 				<section className="relative block h-500-px">
 					<div
@@ -111,10 +107,10 @@ export default function Profile() {
 								"url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')",
 						}}
 					>
-            <span
-	id="blackOverlay"
-	className="w-full h-full absolute opacity-50 bg-black"
-	/>
+						<span
+							id="blackOverlay"
+							className="w-full h-full absolute opacity-50 bg-black"
+						/>
 					</div>
 					<div
 						className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
@@ -130,9 +126,9 @@ export default function Profile() {
 							y="0"
 						>
 							<polygon
-	className="text-blueGray-200 fill-current"
-	points="2560 0 2560 100 0 100"
-	/>
+								className="text-blueGray-200 fill-current"
+								points="2560 0 2560 100 0 100"
+							/>
 						</svg>
 					</div>
 				</section>
@@ -160,10 +156,10 @@ export default function Profile() {
 								</div>
 								<span
 									className="absolute -bottom-24 left-0 mt-20 w-full h-1/2 bg-gray-200 text-center font-normal uppercase text-blueGray-800 transition ease-in-out duration-50 hover:-bottom-1">
-                          <i className="fas fa-camera"/>
-                          <label htmlFor="file_up" className="cursor-pointer ml-1">Change</label>
-                          <input type="file" name="file" id="file_up" className="hidden" onChange={changeAvatar}/>
-                        </span>
+									<i className="fas fa-camera" />
+									<label htmlFor="file_up" className="cursor-pointer ml-1">Change</label>
+									<input type="file" name="file" id="file_up" className="hidden" onChange={changeAvatar} />
+								</span>
 
 								<div className="text-center mt-32">
 									<div>
@@ -174,30 +170,30 @@ export default function Profile() {
 									<div className="my-2">
 										<label className="block text-sm font-normal leading-normal text-blueGray-700 mb-2">Name</label>
 										<input className="border-0 px-2 py-2 bg-white rounded text-sm shadow focus:outline-none focus:ring w-auto ease-linear transition-all duration-150 ml-2" type="text" name="name" id="name" defaultValue={user.name}
-											   placeholder="Your name" onChange={handleChange}/>
+											placeholder="Your name" onChange={handleChange} />
 									</div>
 									<div className="my-2">
 										<label className="block text-sm font-normal leading-normal mb-2 text-blueGray-700 mb-2">E-mail</label>
 										<input className="border-0 px-2 py-2 bg-white rounded text-sm shadow focus:outline-none focus:ring w-auto ease-linear transition-all duration-150 ml-2" type="email" name="email" id="email" defaultValue={user.email}
-											   disabled  />
+											disabled />
 									</div>
 									<div className="my-2">
 										<label className="block text-sm font-normal leading-normal mb-2 text-blueGray-700 mb-2">Address</label>
 										<input className="border-0 px-2 py-2 bg-white rounded text-sm shadow focus:outline-none focus:ring w-auto ease-linear transition-all duration-150 ml-2" type="text" name="address" id="address" defaultValue={user.address}
-											   placeholder="Your Address"  onChange={handleChange}/>
+											placeholder="Your Address" onChange={handleChange} />
 									</div>
 									<div className="my-2">
 										<label className="text-sm font-normal leading-normal mb-2 text-blueGray-700 mb-2 block">Password</label>
-										<input  className="border-0 px-2 py-2 bg-white rounded text-sm shadow focus:outline-none focus:ring w-auto ease-linear transition-all duration-150 ml-2" type="password"  name="password" id="password"
-												value={password}   placeholder="New password"  onChange={handleChange}/>
+										<input className="border-0 px-2 py-2 bg-white rounded text-sm shadow focus:outline-none focus:ring w-auto ease-linear transition-all duration-150 ml-2" type="password" name="password" id="password"
+											value={password} placeholder="New password" onChange={handleChange} />
 									</div>
 									<div className="my-2">
 										<label className="text-sm block font-normal leading-normal mb-2 text-blueGray-700 mb-2">Confirm password</label>
 										<input className="border-0 px-2 py-2 bg-white rounded text-sm shadow focus:outline-none focus:ring w-auto ease-linear transition-all duration-150 ml-2" type="password" name="cf_password" id="cf_password"
-											   value={cf_password} placeholder="Confirm password" onChange={handleChange}/>
+											value={cf_password} placeholder="Confirm password" onChange={handleChange} />
 									</div>
 									<div>
-										<em style={{color: "crimson"}}>
+										<em style={{ color: "crimson" }}>
 											* If you update your password here, you will not be able
 											to login quickly using google and facebook.
 										</em>
@@ -210,7 +206,6 @@ export default function Profile() {
 					</div>
 				</section>
 			</main>
-			<Footer />
 		</>
 	);
 }

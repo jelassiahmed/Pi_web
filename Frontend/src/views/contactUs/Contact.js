@@ -99,7 +99,7 @@ export default function Contact(props) {
               <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200">
                 <div className="flex-auto p-5 lg:p-10">
                   <div className="flex flex-col w-full lg:flex-row">
-                    <label className="block uppercase text-blueGray-800 text-xs font-bold mb-2">Email:<label className="text-blueGray-500 text-xs font-bold mb-2"> info@baazar.com</label></label>
+                    <label className="block uppercase text-blueGray-800 text-xs font-bold mb-2">Email:<label className="text-blueGray-500 text-xs font-bold mb-2"> info@bazaar.com</label></label>
                   </div>
                 </div>
               </div>

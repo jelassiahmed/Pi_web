@@ -13,6 +13,7 @@ export default function Navbar(props) {
 	const auth = useSelector((state) => state.auth);
 	const { user, isLogged } = auth;
 	const [logo, setLogo] = React.useState(logo1);
+	
 	const userLink = () => {
 		return <UserDropdown />;
 	};

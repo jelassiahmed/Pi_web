@@ -1,8 +1,6 @@
 import React from 'react'
-import Navbar from '../components/Navbars/IndexNavbar';
 import Carousel from '../components/HomePage/Carousel';
 import Stats from '../components/HomePage/Stats';
-import Contact from './contactUs/Contact';
 import PromoProducts from '../components/HomePage/PromoProducts';
 import DiveIn from '../components/HomePage/DiveIn';
 import ProductQuickViews_1 from 'components/AANew/Products/ProductQuickViews/ProductQuickViews_1';
@@ -12,7 +10,6 @@ export default function HomePage() {
 
   return (
     <>
-      <Navbar />
       <Carousel />
       <div className="flex flex-col items-center justify-center mt-5">
         <h1 className="text-3xl font-bold text-center">
@@ -41,7 +38,7 @@ export default function HomePage() {
       </div>
       <div className="flex flex-col w-full border-opacity-50">
         <div className="grid h-20 card bg-primary rounded-box place-items-center">
-          <p className='text-white'>Baazar is powered by 100% renewable electricity.</p>
+          <p className='text-white'>Bazaar is powered by 100% renewable electricity.</p>
         </div>
       </div>
       <Stats />
@@ -52,7 +49,6 @@ export default function HomePage() {
       <br />
       <ProductQuickViews_1/>
       <br />
-      <Contact show={false} />
       <link href="https://cdn.jsdelivr.net/npm/daisyui@2.14.2/dist/full.css" rel="stylesheet" type="text/css" />
       <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
       <script src="../path/to/flowbite/dist/flowbite.js"></script>
