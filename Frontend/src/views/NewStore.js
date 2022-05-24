@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import Navbar from "components/Navbars/AuthNavbar.js";
 import defaultImageCover from '../assets/img/defaultImageCover.png'
 import defaultImageProfile from '../assets/img/defaultImageProfile.png'
 import baazarlogo from '../assets/img/baazar_logo.jpg'
@@ -106,7 +105,6 @@ export default function NewStore(props) {
 	};
 	return (
 		<>
-			<Navbar transparent />
 			<div>
 				<div className="w-full bg-white p-10 mb-4">
 					<div className="md:flex items-center border-b pb-6 border-gray-200">

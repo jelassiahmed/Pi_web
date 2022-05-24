@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as faceapi from "face-api.js";
 import CircularProgress from '@material-ui/core/CircularProgress/';
 import Backdrop from '@material-ui/core/Backdrop/';
-import Navbar from '../components/Navbars/IndexNavbar';
-import Footer from '../components/Footers/Footer';
 import * as api from '../api/Api';
 import { useParams, useHistory } from "react-router-dom";
 
