@@ -105,11 +105,11 @@ export default function Register() {
           </div>
       <div className="flex items-center justify-center" >
       
-        <div class="xl:w-10/12 w-full px-8">
-          <div class="xl:px-24">
-            <div class="px-5 py-4 bg-gray-100 rounded-lg flex items-center justify-between mt-7">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
+        <div className="xl:w-10/12 w-full px-8">
+          <div className="xl:px-24">
+            <div className="px-5 py-4 bg-gray-100 rounded-lg flex items-center justify-between mt-7">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M19 9.99999H20C20.2652 9.99999 20.5196 10.1054 20.7071 10.2929C20.8946 10.4804 21 10.7348 21 11V21C21 21.2652 20.8946 21.5196 20.7071 21.7071C20.5196 21.8946 20.2652 22 20 22H4C3.73478 22 3.48043 21.8946 3.29289 21.7071C3.10536 21.5196 3 21.2652 3 21V11C3 10.7348 3.10536 10.4804 3.29289 10.2929C3.48043 10.1054 3.73478 9.99999 4 9.99999H5V8.99999C5 8.08074 5.18106 7.17049 5.53284 6.32121C5.88463 5.47193 6.40024 4.70026 7.05025 4.05025C7.70026 3.40023 8.47194 2.88462 9.32122 2.53284C10.1705 2.18105 11.0807 1.99999 12 1.99999C12.9193 1.99999 13.8295 2.18105 14.6788 2.53284C15.5281 2.88462 16.2997 3.40023 16.9497 4.05025C17.5998 4.70026 18.1154 5.47193 18.4672 6.32121C18.8189 7.17049 19 8.08074 19 8.99999V9.99999ZM17 9.99999V8.99999C17 7.67391 16.4732 6.40214 15.5355 5.46446C14.5979 4.52678 13.3261 3.99999 12 3.99999C10.6739 3.99999 9.40215 4.52678 8.46447 5.46446C7.52678 6.40214 7 7.67391 7 8.99999V9.99999H17ZM11 14V18H13V14H11Z"
@@ -118,87 +118,87 @@ export default function Register() {
                   </svg>
                 </div>
 
-                <p class="text-sm text-gray-800 pl-3">We take privacy issues seriously. You can be sure that your personal data is securely protected.</p>
+                <p className="text-sm text-gray-800 pl-3">We take privacy issues seriously. You can be sure that your personal data is securely protected.</p>
               </div>
             </div>
             
-            <div class="mt-16 lg:flex justify-between border-b border-gray-200 pb-16">
-              <div class="w-80">
-                <div class="flex items-center">
-                  <h1 class="text-xl font-medium pr-2 leading-5 text-gray-800">Personal Information</h1>
+            <div className="mt-16 lg:flex justify-between border-b border-gray-200 pb-16">
+              <div className="w-80">
+                <div className="flex items-center">
+                  <h1 className="text-xl font-medium pr-2 leading-5 text-gray-800">Personal Information</h1>
                 </div>
                 <div className="mt-4">
                 {err && showErrMsg(err)}
                 </div>
-                {/* <p class="mt-4 text-sm leading-5 text-gray-600">Information about the section could go here and a brief description of how this might be used.</p> */}
+                {/* <p className="mt-4 text-sm leading-5 text-gray-600">Information about the section could go here and a brief description of how this might be used.</p> */}
               </div>
               <div>
                 {/* Full Name  */}
-                <div class="md:flex items-center lg:ml-24 mt-8">
-                  <div class="md:w-full md:ml-12 md:mt-0 mt-4">
-                    <label class="text-sm leading-none text-gray-800" id="lastName">Full name</label>
+                <div className="md:flex items-center lg:ml-24 mt-8">
+                  <div className="md:w-full md:ml-12 md:mt-0 mt-4">
+                    <label className="text-sm leading-none text-gray-800" id="lastName">Full name</label>
                     <input
                       value={name} name="name" onChange={handleChangeInput}
-                      type="name" tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. Jhon Luis" />
+                      type="name" tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. Jhon Luis" />
                   </div>
                 </div>
                 {/* Email + Phone */}
-                <div class="md:flex items-center lg:ml-24 mt-8">
-                  <div class="md:w-64 md:ml-12 md:mt-0 mt-4">
-                    <label class="text-sm leading-none text-gray-800" id="lastName">Email</label>
-                    <input type="name" value={email} name="email" onChange={handleChangeInput} tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. jhon.inbox@...com" />
+                <div className="md:flex items-center lg:ml-24 mt-8">
+                  <div className="md:w-64 md:ml-12 md:mt-0 mt-4">
+                    <label className="text-sm leading-none text-gray-800" id="lastName">Email</label>
+                    <input type="name" value={email} name="email" onChange={handleChangeInput} tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. jhon.inbox@...com" />
                   </div>
 
-                  <div class="md:w-64 md:ml-12 md:mt-0 mt-4">
-                    <label class="text-sm leading-none text-gray-800" id="phone" >Phone number</label>
-                    <input value={telephone} name="telephone" onChange={handleChangeInput} type="name" tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="phone" placeholder="+216 11 222 333" />
+                  <div className="md:w-64 md:ml-12 md:mt-0 mt-4">
+                    <label className="text-sm leading-none text-gray-800" id="phone" >Phone number</label>
+                    <input value={telephone} name="telephone" onChange={handleChangeInput} type="name" tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="phone" placeholder="+216 11 222 333" />
                   </div>
                 </div>
 
                 {/* Address + city + zip code */}
-                <div class="md:flex items-center lg:ml-24 mt-8">
-                  <div class="md:w-96 md:ml-12 md:mt-0 mt-4">
-                    <label class="text-sm leading-none text-gray-800" id="lastName">Address</label>
-                    <input type="name" value={address} name="address" onChange={handleChangeInput} tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. sidi bou ali street" />
+                <div className="md:flex items-center lg:ml-24 mt-8">
+                  <div className="md:w-96 md:ml-12 md:mt-0 mt-4">
+                    <label className="text-sm leading-none text-gray-800" id="lastName">Address</label>
+                    <input type="name" value={address} name="address" onChange={handleChangeInput} tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. sidi bou ali street" />
                   </div>
 
-                  <div class="md:w-28 md:ml-12 md:mt-0 mt-4">
-                    <label class="text-sm leading-none text-gray-800" id="phone" >Zip/Postal code</label>
-                    <input type="name" value={zip} name="zip" onChange={handleChangeInput} tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="phone" placeholder="8050" />
+                  <div className="md:w-28 md:ml-12 md:mt-0 mt-4">
+                    <label className="text-sm leading-none text-gray-800" id="phone" >Zip/Postal code</label>
+                    <input type="name" value={zip} name="zip" onChange={handleChangeInput} tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="phone" placeholder="8050" />
                   </div>
                 </div>
 
                 {/* Country + state .city*/}
-                <div class="md:flex items-center lg:ml-24 mt-8">
-                  <div class="md:w-40 md:ml-12 md:mt-0 mt-4">
-                    <label class="text-sm leading-none text-gray-800" id="lastName">City</label>
-                    <input value={city} name="city" onChange={handleChangeInput} type="name" tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. Hammamet" />
+                <div className="md:flex items-center lg:ml-24 mt-8">
+                  <div className="md:w-40 md:ml-12 md:mt-0 mt-4">
+                    <label className="text-sm leading-none text-gray-800" id="lastName">City</label>
+                    <input value={city} name="city" onChange={handleChangeInput} type="name" tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. Hammamet" />
                   </div>
 
-                  <div class="md:w-40 md:ml-12 md:mt-0 mt-4">
-                    <label class="text-sm leading-none text-gray-800" id="lastName">State</label>
-                    <input value={state} name="state" onChange={handleChangeInput} type="name" tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. Nabeul" />
+                  <div className="md:w-40 md:ml-12 md:mt-0 mt-4">
+                    <label className="text-sm leading-none text-gray-800" id="lastName">State</label>
+                    <input value={state} name="state" onChange={handleChangeInput} type="name" tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="eg. Nabeul" />
                   </div>
 
-                  <div class="md:w-40 md:ml-12 md:mt-0 mt-4">
-                    <label class="text-sm leading-none text-gray-800" id="phone" >Country</label>
-                    <input value={country} name="country" onChange={handleChangeInput} type="name" tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="phone" placeholder="Tunisia" />
+                  <div className="md:w-40 md:ml-12 md:mt-0 mt-4">
+                    <label className="text-sm leading-none text-gray-800" id="phone" >Country</label>
+                    <input value={country} name="country" onChange={handleChangeInput} type="name" tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="phone" placeholder="Tunisia" />
                   </div>
                 </div>
 
               </div>
             </div>
-            <div class="mt-16 lg:flex justify-between border-b border-gray-200 pb-16 mb-4">
-              <div class="w-80">
-                <div class="flex items-center">
-                  <h1 class="text-xl font-medium pr-2 leading-5 text-gray-800">Security</h1>
+            <div className="mt-16 lg:flex justify-between border-b border-gray-200 pb-16 mb-4">
+              <div className="w-80">
+                <div className="flex items-center">
+                  <h1 className="text-xl font-medium pr-2 leading-5 text-gray-800">Security</h1>
                 </div>
-                {/* <p class="mt-4 text-sm leading-5 text-gray-600">Information about the section could go here and a brief description of how this might be used.</p> */}
+                {/* <p className="mt-4 text-sm leading-5 text-gray-600">Information about the section could go here and a brief description of how this might be used.</p> */}
               </div>
               <div>
-                <div class="md:flex items-center lg:ml-24 lg:mt-0 mt-4">
-                  <div class="md:w-64">
-                    <label class="flex flex-row text-sm leading-none text-gray-800" id="password">
+                <div className="md:flex items-center lg:ml-24 lg:mt-0 mt-4">
+                  <div className="md:w-64">
+                    <label className="flex flex-row text-sm leading-none text-gray-800" id="password">
                       Password
                       <div onClick={() => setShowPass(!showpass)} className="ml-4">
                         <div id="show">
@@ -219,10 +219,10 @@ export default function Register() {
                         </div>
                       </div>
                     </label>
-                    <input value={password} name="password" onChange={handleChangeInput} type={showpass ? "text" : "password"} tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="password" placeholder="Enter your password" />
+                    <input value={password} name="password" onChange={handleChangeInput} type={showpass ? "text" : "password"} tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="password" placeholder="Enter your password" />
                   </div>
-                  <div class="md:w-64 md:ml-12 md:mt-0 mt-4">
-                    <label class="flex flex-row text-sm leading-none text-gray-800" id="securityCode">
+                  <div className="md:w-64 md:ml-12 md:mt-0 mt-4">
+                    <label className="flex flex-row text-sm leading-none text-gray-800" id="securityCode">
                       Confirm password
                       <div onClick={() => setShowPass2(!showpass2)} className="ml-4">
                         <div id="show">
@@ -243,15 +243,15 @@ export default function Register() {
                         </div>
                       </div>
                     </label>
-                    <input value={cf_password} name="cf_password" onChange={handleChangeInput} type={showpass2 ? "text" : "password"} tabindex="0" class="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="securityCode" placeholder="Confirm your password" />
+                    <input value={cf_password} name="cf_password" onChange={handleChangeInput} type={showpass2 ? "text" : "password"} tabIndex="0" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="securityCode" placeholder="Confirm your password" />
                   </div>
                 </div>
               </div>
             </div>
-            <div class="mt-8 flex flex-col justify-between border-b border-gray-200 pb-16 mb-4">
-              <div class="w-full">
-                <div class="flex items-center justify-center">
-                  <h1 class="text-xl font-medium pr-2 leading-5 text-gray-800">
+            <div className="mt-8 flex flex-col justify-between border-b border-gray-200 pb-16 mb-4">
+              <div className="w-full">
+                <div className="flex items-center justify-center">
+                  <h1 className="text-xl font-medium pr-2 leading-5 text-gray-800">
                     <div>
                       <label className="inline-flex items-center cursor-pointer">
                         <input
