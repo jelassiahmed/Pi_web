@@ -11,7 +11,7 @@
     "client-install": "cd Frontend && npm install --force",
     "install-all": "concurrently \"npm run server-install\" \"npm run client-instal1\"",
     "dev": "concurrently \"npm run server\" \"npm run Frontend\"",
-    "heroku-postbuild": "cd Frontend && npm install --force && npm run build"
+    "heroku-postbuild": "cd Frontend && npm install && npm run build"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
