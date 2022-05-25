@@ -1,16 +1,30 @@
 const mongoose = require("mongoose");
 const { Products, Categories, Comments } = require("./../models/product.model");
 const Store = require("./../models/store.model");
+const jwt = require("jsonwebtoken");
 
 // C: Create
 module.exports.addProduct = async function (req, res) {
 	try {
+		const user = jwt.decode(
+			req.header("Authorization"),
+			process.env.ACCESS_TOKEN_SECRET
+		);
+
+		const store = await Store.findOne({
+			owner: user,
+		});
+
+		if (!store) {
+			res.json("You are not allowed to add products");
+		}
+
 		const product = new Products(req.body);
 		product
 			.save()
 			.then((product) => {
 				console.log(product);
-				res.json(product);
+				res.json(product).select("-ratings");
 			})
 			.catch((err) => {
 				res.json(err);
@@ -24,13 +38,13 @@ module.exports.addProduct = async function (req, res) {
 module.exports.getProductById = async function (req, res) {
 	try {
 		let product = await Product.findById(req.params.id);
-		res.json(product);
+		res.json(product).select("-ratings");
 	} catch (err) {
 		res.json(err);
 	}
 };
 
-module.exports.getProductByCategorie = async function (req, res) {
+module.exports.getProductByCategory = async function (req, res) {
 	try {
 		let products = await Product.find({ categorie: req.params.id });
 		res.json(products);
@@ -60,18 +74,8 @@ module.exports.getAllProducts = async function (req, res) {
 		const quantity = req.query.quantity ? parseFloat(req.query.quantity) : 1;
 		const store = req.query.store;
 		const category = req.query.category;
+		const ratingMin = req.query.ratingMin ? parseFloat(req.query.ratingMin) : 0;
 		const offset = limit * (page - 1);
-		console.log(
-			name,
-			category,
-			store,
-			priceMin,
-			priceMax,
-			limit,
-			page,
-			quantity,
-			offset
-		);
 		const query = Products.find()
 			.where("visibility")
 			.equals(true)
@@ -81,7 +85,9 @@ module.exports.getAllProducts = async function (req, res) {
 			.gte(priceMin)
 			.lte(priceMax)
 			.where("quantity")
-			.gte(quantity);
+			.gte(quantity)
+			.where("averageRating")
+			.gte(ratingMin);
 		if (store) query.where("store").equals(store);
 		if (category) query.where("category").equals(category);
 		query
@@ -89,7 +95,7 @@ module.exports.getAllProducts = async function (req, res) {
 			.populate("category", "_id name");
 		if (limit > 0) query.limit(limit).skip(offset);
 		const products = await query.select(
-			"-comments -visibility -createdAt -updatedAt"
+			"-comments -visibility -createdAt -updatedAt -ratings"
 		);
 		const pages = limit
 			? Math.floor(products.length / limit) + (products.length % limit)
@@ -112,10 +118,10 @@ module.exports.getAllProducts = async function (req, res) {
 // U: Update
 module.exports.updateProduct = async function (req, res) {
 	try {
-		let product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-			new: true,
-		});
-		res.json(product);
+		let product = await Product.findById(req.params.id);
+		product = Object.assign(product, req.body);
+		product.save();
+		res.json(product).select("-ratings");
 	} catch (err) {
 		res.json(err);
 	}
@@ -123,10 +129,26 @@ module.exports.updateProduct = async function (req, res) {
 
 module.exports.rateProduct = async function (req, res) {
 	try {
-		let product = await Product.findByIdAndUpdate(req.params.id, {
-			rating: req.body.rating,
-		});
-		res.json(product);
+		const product = await Product.findById(req.params.id);
+
+		const user = jwt.decode(
+			req.header("Authorization"),
+			process.env.ACCESS_TOKEN_SECRET
+		);
+
+		const index = product.ratings.findIndex((rating) => rating.user == user);
+		if (index) {
+			product.ratings[index].rating = req.body.rating;
+		} else {
+			product.ratings.push({
+				user: user,
+				rating: req.body.rating,
+			});
+		}
+
+		product.save();
+
+		res.json("Rating Updated");
 	} catch (err) {
 		res.json(err);
 	}
@@ -134,10 +156,91 @@ module.exports.rateProduct = async function (req, res) {
 
 module.exports.commentProduct = async function (req, res) {
 	try {
-		let product = await Product.findByIdAndUpdate(req.params.id, {
-			comments: req.body.comments,
+		const product = await Product.findById(req.params.id);
+
+		const user = jwt.decode(
+			req.header("Authorization"),
+			process.env.ACCESS_TOKEN_SECRET
+		);
+
+		product.comments.push({
+			user: user,
+			rating: req.body.rating,
 		});
-		res.json(product);
+
+		product.save();
+
+		res.json(product).select("-ratings");
+	} catch (err) {
+		res.json(err);
+	}
+};
+
+module.exports.deleteComment = async function (req, res) {
+	try {
+		const { productId, commentId } = req.params;
+		const product = await Product.findById(productId);
+
+		const user = jwt.decode(
+			req.header("Authorization"),
+			process.env.ACCESS_TOKEN_SECRET
+		);
+
+		const index = product.comments.findIndex(
+			(comment) => (comment._id = commentId && comment.user == user)
+		);
+
+		if (index) {
+			product.comments.splice(index, 1);
+		}
+
+		product.save();
+
+		res.json(product).select("-ratings");
+	} catch (err) {
+		res.json(err);
+	}
+};
+
+module.exports.likeDeslikeComment = async function (req, res) {
+	try {
+		const { productId, commentId, like } = req.params;
+		const product = await Product.findById(productId);
+
+		const user = jwt.decode(
+			req.header("Authorization"),
+			process.env.ACCESS_TOKEN_SECRET
+		);
+
+		const index = product.comments.findIndex(
+			(comment) => (comment._id = commentId)
+		);
+
+		if (index > -1) {
+			if (product.comments[index].likes.includes(user)) {
+				const indexLike = product.comments[index].likes.findIndex(
+					(c) => c.user == user
+				);
+				product.comments[index].likes.splice(indexLike, 1);
+			}
+
+			if (product.comments[index].dislikes.includes(user)) {
+				const indexDislike = product.comments[index].dislikes.findIndex(
+					(c) => c.user == user
+				);
+				product.comments[index].dislikes.splice(indexDislike, 1);
+			}
+
+			if (like && indexLike == -1) {
+				product.comments[index].likes.push(user);
+			} else if (!like && indexDislike == -1) {
+				product.comments[index].dislikes.push(user);
+			}
+		}
+
+		product.save();
+
+		res.json(product).select("-ratings");
 	} catch (err) {
 		res.json(err);
 	}
@@ -149,7 +252,7 @@ module.exports.deleteProduct = async function (req, res) {
 		let product = await Product.findByIdAndUpdate(req.params.id, {
 			visibility: false,
 		});
-		res.json(product);
+		res.json(product).select("-ratings");
 	} catch (err) {
 		res.json(err);
 	}

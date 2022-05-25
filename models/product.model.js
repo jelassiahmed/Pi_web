@@ -39,13 +39,39 @@ const product = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Store",
 		},
-		rating: { type: Number, default: 0 },
+		// rating: { type: Number, default: 0 },
+		ratings: [
+			{
+				user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+				rating: { type: Number, default: 0, min: 0, max: 5 },
+			},
+		],
 		comments: [comment],
 		quantity: { type: Number, default: 1 },
 		visibility: { type: Boolean, default: true },
 	},
 	{ timestamps: true }
 );
+
+product.virtual("averageRating").get(function () {
+	if (this.ratings.length === 0) return 0;
+	this.ratings.reduce((rating, sum) => {
+		sum += rating.rating;
+	}, 0);
+	return sum / this.ratings.length;
+});
+
+product.virtual("ratingCount").get(function () {
+	return this.ratings.length;
+});
+
+product.virtual("purchaseCount").get(function () {
+	Purchase.find({ items: { $elemMatch: { product: this._id } } }).then(
+		(purchases) => {
+			return purchases.length;
+		}
+	);
+});
 
 const Products = mongoose.model("Products", product);
 const Categories = mongoose.model("Categories", category);

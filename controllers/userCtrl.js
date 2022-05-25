@@ -2,14 +2,13 @@ const Users = require("./../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const sendMail = require("./sendMail");
-const {google} = require('googleapis')
-const fetch = require('node-fetch')
+const { google } = require("googleapis");
+const fetch = require("node-fetch");
 const mongoose = require("mongoose");
-const {OAuth2} = google.auth
-const User = mongoose.model("Users")
+const { OAuth2 } = google.auth;
+const User = mongoose.model("Users");
 
-const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID )
-
+const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID);
 
 const { CLIENT_URL } = process.env;
 
@@ -211,16 +210,16 @@ const userCtrl = {
 			const page = parseInt(req.query.page) || 1;
 			const pageSize = parseInt(req.query.pageSize) || 3;
 			const skip = (page - 1) * pageSize;
-			const total= await Users.countDocuments();
+			const total = await Users.countDocuments();
 
-			const pages = Math.ceil(total/ pageSize);
+			const pages = Math.ceil(total / pageSize);
 
 			query = query.skip(skip).limit(pageSize);
-			if(page > pages){
+			if (page > pages) {
 				res.status(404).json({
 					status: "fail",
 					message: "Page not found",
-				})
+				});
 			}
 
 			const result = await query;
@@ -229,8 +228,8 @@ const userCtrl = {
 				count: result.length,
 				page,
 				pages,
-				data: result
-			})
+				data: result,
+			});
 
 			//const users = await Users.find().select("-password");
 			//res.json({total: users.length, users});
@@ -239,8 +238,8 @@ const userCtrl = {
 			console.log(err);
 			res.status(500).json({
 				status: "error",
-				msg: "Server Error"
-			})
+				msg: "Server Error",
+			});
 		}
 	},
 	getUsersAllinfoo: async (req, res) => {
@@ -303,96 +302,112 @@ const userCtrl = {
 	},
 	googleLogin: async (req, res) => {
 		try {
-			const {tokenId} = req.body
+			const { tokenId } = req.body;
 
-			const verify = await client.verifyIdToken({idToken: tokenId, audience: process.env.MAILING_SERVICE_CLIENT_ID})
+			const verify = await client.verifyIdToken({
+				idToken: tokenId,
+				audience: process.env.MAILING_SERVICE_CLIENT_ID,
+			});
 
-			const {email_verified, email, name, picture} = verify.payload
+			const { email_verified, email, name, picture } = verify.payload;
 
-			const password = email + process.env.GOOGLE_SECRET
+			const password = email + process.env.GOOGLE_SECRET;
 
-			const passwordHash = await bcrypt.hash(password, 12)
+			const passwordHash = await bcrypt.hash(password, 12);
 
-			if(!email_verified) return res.status(400).json({msg: "Email verification failed."})
+			if (!email_verified)
+				return res.status(400).json({ msg: "Email verification failed." });
 
-			const user = await Users.findOne({email})
+			const user = await Users.findOne({ email });
 
-			if(user){
-				const refresh_token = createRefreshToken({id: user._id})
-				res.cookie('refreshtoken', refresh_token, {
+			if (user) {
+				const refresh_token = createRefreshToken({ id: user._id });
+				res.cookie("refreshtoken", refresh_token, {
 					httpOnly: true,
-					path: '/user/refresh_token',
-					maxAge: 7*24*60*60*1000 // 7 days
-				})
+					path: "/user/refresh_token",
+					maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+				});
 
-				res.json({msg: "Login success!"})
-			}else{
+				res.json({ msg: "Login success!" });
+			} else {
 				const newUser = new Users({
-					name, email, password: passwordHash, avatar: picture,country:"", telephone: "", city: "", address: "", state: "", zip: ""
-				})
+					name,
+					email,
+					password: passwordHash,
+					avatar: picture,
+					country: "",
+					telephone: "",
+					city: "",
+					address: "",
+					state: "",
+					zip: "",
+				});
 
-				await newUser.save()
+				await newUser.save();
 
-				const refresh_token = createRefreshToken({id: newUser._id})
-				res.cookie('refreshtoken', refresh_token, {
+				const refresh_token = createRefreshToken({ id: newUser._id });
+				res.cookie("refreshtoken", refresh_token, {
 					httpOnly: true,
-					path: '/user/refresh_token',
-					maxAge: 7*24*60*60*1000 // 7 days
-				})
+					path: "/user/refresh_token",
+					maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+				});
 
-				res.json({msg: "Login success!"})
+				res.json({ msg: "Login success!" });
 			}
-
-
 		} catch (err) {
-			return res.status(500).json({msg: err.message})
+			return res.status(500).json({ msg: err.message });
 		}
 	},
 	facebookLogin: async (req, res) => {
 		try {
-			const {accessToken, userID} = req.body
+			const { accessToken, userID } = req.body;
 
-			const URL = `https://graph.facebook.com/v2.9/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`
+			const URL = `https://graph.facebook.com/v2.9/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
 
-			const data = await fetch(URL).then(res => res.json()).then(res => {return res})
+			const data = await fetch(URL)
+				.then((res) => res.json())
+				.then((res) => {
+					return res;
+				});
 
-			const {email, name, picture} = data
+			const { email, name, picture } = data;
 
-			const password = email + process.env.FACEBOOK_SECRET
+			const password = email + process.env.FACEBOOK_SECRET;
 
-			const passwordHash = await bcrypt.hash(password, 12)
+			const passwordHash = await bcrypt.hash(password, 12);
 
-			const user = await Users.findOne({email})
+			const user = await Users.findOne({ email });
 
-			if(user){
-				const refresh_token = createRefreshToken({id: user._id})
-				res.cookie('refreshtoken', refresh_token, {
+			if (user) {
+				const refresh_token = createRefreshToken({ id: user._id });
+				res.cookie("refreshtoken", refresh_token, {
 					httpOnly: true,
-					path: '/user/refresh_token',
-					maxAge: 7*24*60*60*1000 // 7 days
-				})
+					path: "/user/refresh_token",
+					maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+				});
 
-				res.json({msg: "Login success!"})
-			}else{
+				res.json({ msg: "Login success!" });
+			} else {
 				const newUser = new Users({
-					name, email, password: passwordHash, avatar: picture.data.url
-				})
+					name,
+					email,
+					password: passwordHash,
+					avatar: picture.data.url,
+				});
 
-				await newUser.save()
+				await newUser.save();
 
-				const refresh_token = createRefreshToken({id: newUser._id})
-				res.cookie('refreshtoken', refresh_token, {
+				const refresh_token = createRefreshToken({ id: newUser._id });
+				res.cookie("refreshtoken", refresh_token, {
 					httpOnly: true,
-					path: '/user/refresh_token',
-					maxAge: 7*24*60*60*1000 // 7 days
-				})
+					path: "/user/refresh_token",
+					maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+				});
 
-				res.json({msg: "Login success!"})
+				res.json({ msg: "Login success!" });
 			}
-
-
 		} catch (err) {
-			return res.status(500).json({msg: err.message})
+			return res.status(500).json({ msg: err.message });
 		}
 	},
 };
