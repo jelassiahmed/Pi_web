@@ -32,8 +32,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductQuickviews() {
-  const [open, setOpen] = useState(false)
+export default function ProductQuickViews_2() {
+  const [open, setOpen] = useState(true)
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
 

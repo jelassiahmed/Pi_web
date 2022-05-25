@@ -2,10 +2,12 @@ import React from 'react'
 import Navbar from '../components/Navbars/IndexNavbar';
 import Carousel from '../components/HomePage/Carousel';
 import Stats from '../components/HomePage/Stats';
-import CarouselProducts from '../components/Product/CarouselProducts';
 import Contact from './contactUs/Contact';
 import PromoProducts from '../components/HomePage/PromoProducts';
 import DiveIn from '../components/HomePage/DiveIn';
+import ProductQuickViews_1 from 'components/AANew/Products/ProductQuickViews/ProductQuickViews_1';
+import CategoryFilters from 'components/AANew/Category Filters/CategoryFilters';
+
 export default function HomePage() {
 
   return (
@@ -21,7 +23,7 @@ export default function HomePage() {
         </h2>
       </div>
       <br />
-      <CarouselProducts />
+      <CategoryFilters />
       <br />
       <div className="hero min-h-screen" style={{ backgroundImage: `url("https://api.lorem.space/image/fashion?w=1000&h=800")` }}>
         <div className="hero-overlay bg-opacity-60"></div>
@@ -48,6 +50,7 @@ export default function HomePage() {
       <PromoProducts />
       <br />
       <br />
+      <ProductQuickViews_1/>
       <br />
       <Contact show={false} />
       <link href="https://cdn.jsdelivr.net/npm/daisyui@2.14.2/dist/full.css" rel="stylesheet" type="text/css" />
