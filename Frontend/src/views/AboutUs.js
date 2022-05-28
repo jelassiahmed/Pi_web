@@ -12,7 +12,7 @@ export default function AboutUs() {
                     <div>
                         <h1 className="text-5xl font-bold">Privacy Policy</h1>
                         <h3 className="py-6 text-xl">
-                            Baazar is the global marketplace for unique and creative goods. It’s home to a universe of special, extraordinary items, from unique handcrafted pieces to vintage treasures.
+                            Bazaar is the global marketplace for unique and creative goods. It’s home to a universe of special, extraordinary items, from unique handcrafted pieces to vintage treasures.
 
                             In a time of increasing automation, it’s our mission to keep human connection at the heart of commerce.
 

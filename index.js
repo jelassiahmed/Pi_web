@@ -10,7 +10,7 @@ const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http, {
 
-	cors: { origin: "https://bazaartn.herokuapp.com"},
+	cors: { origin: "https://baazartn.herokuapp.com"},
 });
 const chatService = require("./services/chat.service");
 
@@ -132,8 +132,8 @@ app.post("/create-checkout-session", async (req, res) => {
 				quantity: item.amount
 			  }
 			}),
-			success_url: `http://localhost:3000/PaymentSucess`,
-			cancel_url: `http://localhost:3000/PaymentError`,
+			success_url: `https://baazartn.herokuapp.com/PaymentSucess`,
+			cancel_url: `https://baazartn.herokuapp.com/PaymentError`,
 		  }
 	
 		  // Create Checkout Sessions from body params.

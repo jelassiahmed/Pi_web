@@ -90,7 +90,7 @@ function App() {
   };
 	return (
 		<>
-		{/* <Navbar/> */}
+		<Navbar/>
 		<Router>
 			<BrowserRouter>
 				<Switch>
