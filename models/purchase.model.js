@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-const Products = mongoose.model("Products");
-const Stores = mongoose.model("Stores");
-const Users = mongoose.model("Users");
+const Products = require("./../models/product.model");
+const Stores = require("./../models/store.model");
+const Users = require("./../models/user.model");
 
-const purchase = new mongooses.Schema(
+const purchase = new mongoose.Schema(
 	{
 		user: {
 			type: mongoose.Schema.Types.ObjectId,

@@ -42,30 +42,28 @@ store.virtual("averageRating").get(function () {
 	});
 });
 
-store.virtual("totalSales").get(function () {
-	const purchases = await Purchases.aggregate(
-		[
-			{
-				$lookup: {
-					from: "products",
-					localField: "items.product",
-					foreignField: "_id",
-					as: "product",
-				},
+store.virtual("totalSales").get(async function () {
+	const purchases = await Purchases.aggregate([
+		{
+			$lookup: {
+				from: "products",
+				localField: "items.product",
+				foreignField: "_id",
+				as: "product",
 			},
-			{
-				$match: {
-					"product.store": this._id,
-				},
+		},
+		{
+			$match: {
+				"product.store": this._id,
 			},
-			{
-				$group: {
-					_id: null,
-					total: { $sum: "$items.quantity" },
-				},
+		},
+		{
+			$group: {
+				_id: null,
+				total: { $sum: "$items.quantity" },
 			},
-		]
-	);
+		},
+	]);
 	return purchases[0].total;
 });
 
