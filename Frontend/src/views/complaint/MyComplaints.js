@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as api from '../../api/Api';
 import { useDispatch, useSelector } from "react-redux";
-import Navbar from '../../components/Navbars/IndexNavbar';
 import ModalChat from "../../components/Modal/ModalChat";
 import ModalImage from "../../components/Modal/ModalImage";
 
@@ -57,13 +56,12 @@ export default function MyComplaints() {
 
   return (
     <>
-      <Navbar />
       <section className="relative block h-500-px">
         <div
           className="absolute top-0 w-full h-full bg-center bg-cover"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')",
+              "url('https://labsnews.com/en/wp-content/uploads/sites/6/2018/07/customer-complaints-ebanx-1280x720.jpg')",
           }}
         >
 

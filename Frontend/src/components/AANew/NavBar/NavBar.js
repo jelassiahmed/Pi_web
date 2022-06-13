@@ -1,7 +1,10 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
+import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon , HeartIcon } from '@heroicons/react/outline'
 import ShoppingCarts1 from '../Products/ShoppingCarts/ShoppingCarts_1'
+import logobaazar from '../../../assets/img/baazar_logo.jpg'
+import { useSelector } from "react-redux";
+import UserDropdown from '../../Dropdowns/UserDropdown';
 
 const navigation = {
   categories: [
@@ -143,7 +146,11 @@ const products = [
 ]
 export default function Navbar() {
   const [open, setOpen] = useState(false)
-
+	const auth = useSelector((state) => state.auth);
+	const { user, isLogged } = auth;
+  const userLink = () => {
+		return <UserDropdown />;
+	};
   return (
     <>
       <div className="bg-white">
@@ -310,7 +317,7 @@ export default function Navbar() {
                     <span className="sr-only">Workflow</span>
                     <img
                       className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                      src={logobaazar}
                       alt=""
                     />
                   </a>
@@ -416,16 +423,22 @@ export default function Navbar() {
                   </div>
                 </Popover.Group>
 
+               
                 <div className="ml-auto flex items-center">
-                  <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                      Sign in
-                    </a>
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                      Create account
-                    </a>
-                  </div>
+                  {isLogged ? (
+                    userLink()
+                  ) : (
+                    <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                      <a href="/auth/login" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                        Sign in
+                      </a>
+                      <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                      <a href="/auth/register" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                        Create account
+                      </a>
+                    </div>
+                  )}
+                  
 
                   <div className="hidden lg:ml-8 lg:flex">
                     <a href="#" className="text-gray-700 hover:text-gray-800 flex items-center">
@@ -444,6 +457,13 @@ export default function Navbar() {
                     <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
                       <span className="sr-only">Search</span>
                       <SearchIcon className="w-6 h-6" aria-hidden="true" />
+                    </a>
+                  </div>
+
+                  <div className="flex lg:ml-6">
+                    <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                      <span className="sr-only">WishList</span>
+                      <HeartIcon className="w-6 h-6" />
                     </a>
                   </div>
 

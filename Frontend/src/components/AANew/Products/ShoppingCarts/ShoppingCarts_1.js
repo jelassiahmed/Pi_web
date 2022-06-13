@@ -1,36 +1,63 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useState } from 'react'
+import  React,{ Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
+import {useHistory, Link } from "react-router-dom";
+//redux
+import { useSelector, useDispatch } from "react-redux";
+import getStripe from 'api/getStripe';
 
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
+
 
 export default function ShoppingCarts1() {
-  const [open, setOpen] = useState(false)
 
+  const [open, setOpen] = useState(false)
+  const [price, setPrice] = useState(0);
+  //redux
+  const cart = useSelector((state) => state.cartReducer);
+  const dispatch = useDispatch();
+
+ 
+
+  const handlePrice = () => {
+    let ans = 0;
+    cart.map((item) => (ans += item.amount * item.price));
+    setPrice(ans);
+  };
+
+
+  
+  
+
+//   const goToCheckout = () => {
+    // localStorage.removeItem("cartItems");
+//     window.location.href = "/ProductCheckout";
+//     localStorage.setItem("cartItems", JSON.stringify(cart));
+// }
+  const handleCheckout = async() => {
+    localStorage.removeItem("cartItems");
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+    console.log('cart==',cart);
+    const stripe = await getStripe();
+    const response = await fetch("http://localhost:3000/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cart),
+    });
+
+    if(response.statusCode === 500) return;
+    
+    const body = await response.json();
+
+    window.location.href = body.url;
+
+    console.log('data==',body);
+  }
+
+  useEffect(() => {
+    handlePrice();
+  })
   return (
     <>
       <div className="flex items-center justify-center py-8">
@@ -41,7 +68,7 @@ export default function ShoppingCarts1() {
               aria-hidden="true"
               onClick={() => setOpen(!open)}
             />
-            <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+            <span className="ml-2 text-sm font-medium text-ring-pink-700 group-hover:text-gray-800">{cart.length}</span>
             <span className="sr-only">items in cart, view bag</span>
           </a>
         </div>
@@ -93,12 +120,12 @@ export default function ShoppingCarts1() {
                           <div className="mt-8">
                             <div className="flow-root">
                               <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                {products.map((product) => (
+                                {cart.map((product) => (
                                   <li key={product.id} className="flex py-6">
                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                       <img
-                                        src={product.imageSrc}
-                                        alt={product.imageAlt}
+                                        src={product.img}
+                                        alt={product.img}
                                         className="h-full w-full object-cover object-center"
                                       />
                                     </div>
@@ -107,19 +134,34 @@ export default function ShoppingCarts1() {
                                       <div>
                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                           <h3>
-                                            <a href={product.href}> {product.name} </a>
+                                            <a href='#'> {product.name} </a>
                                           </h3>
-                                          <p className="ml-4">{product.price}</p>
+                                          <p className="ml-4">{product.title}</p>
                                         </div>
-                                        <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                                       </div>
                                       <div className="flex flex-1 items-end justify-between text-sm">
-                                        <p className="text-gray-500">Qty {product.quantity}</p>
-
-                                        <div className="flex">
+                                        {/* <p className="text-gray-500">Qty {product.amount}</p> */}
+                                        <div>
+                                          <button
+                                            onClick={() => dispatch({ type: "INCREASE_QTY", payload: product })}>+</button>
+                                          <button class="w-12 py-3 text-xs text-center border-gray-200 rounded no-spinners">{product.amount}</button>
+                                          <button
+                                            onClick={() => 
+                                              {
+                                                if (product.amount > 1) {
+                                                  dispatch({ type: "DECREASE_QTY", payload: product })
+                                                } else {
+                                                  dispatch({ type: "REMOVE_FROM_CART", payload: product })
+                                                }
+                                              }
+                                            }>-</button>
+                                        </div>
+                                        <div className="flex flex-col">
+                                          <p className="text-base font-black leading-none text-gray-800">${product.price}</p>
                                           <button
                                             type="button"
                                             className="font-medium text-indigo-600 hover:text-indigo-500"
+                                            onClick={() => dispatch({ type: "REMOVE_FROM_CART", payload: product })}
                                           >
                                             Remove
                                           </button>
@@ -136,16 +178,18 @@ export default function ShoppingCarts1() {
                         <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                           <div className="flex justify-between text-base font-medium text-gray-900">
                             <p>Subtotal</p>
-                            <p>$262.00</p>
+                            <p>${price}</p>
                           </div>
                           <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                           <div className="mt-6">
-                            <a
-                              href="#"
+                            {/* <button
+                              onClick={() => {goToCheckout()}}
                               className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                             >
                               Checkout
-                            </a>
+                            </button>
+                             */}
+                             <button onClick={() => handleCheckout()} className=" bg-transparent font-medium text-base leading-4 border-2 border-white py-3 w-full mt-2 text-dark">Checkout</button>
                           </div>
                           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                             <p>

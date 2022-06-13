@@ -1,4 +1,6 @@
-var mongoose = require("mongoose");
+const Purchases = require("../models/purchase.model");
+const Products = require("../models/product.model");
+const mongoose = require("mongoose");
 
 const store = new mongoose.Schema(
 	{
@@ -29,8 +31,41 @@ const store = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
-var str = mongoose.model("Store", store);
-module.exports = {
-	Store: str,
-	Storeschema: store,
-};
+
+store.virtual("averageRating").get(function () {
+	Products.find({ store: this._id }).then((products) => {
+		let total = 0;
+		products.forEach((product) => {
+			total += product.rating;
+		});
+		return total / products.length;
+	});
+});
+
+store.virtual("totalSales").get(async function () {
+	const purchases = await Purchases.aggregate([
+		{
+			$lookup: {
+				from: "products",
+				localField: "items.product",
+				foreignField: "_id",
+				as: "product",
+			},
+		},
+		{
+			$match: {
+				"product.store": this._id,
+			},
+		},
+		{
+			$group: {
+				_id: null,
+				total: { $sum: "$items.quantity" },
+			},
+		},
+	]);
+	return purchases[0].total;
+});
+
+const Store = mongoose.model("Store", store);
+module.exports = Store;

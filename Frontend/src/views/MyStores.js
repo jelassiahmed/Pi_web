@@ -1,9 +1,10 @@
 import Navbar from "components/Navbars/AuthNavbar.js";
 import Footer from "components/Footers/Footer.js";
-import axios from "axios";
+import * as api from '../api/Api';
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import StoreCard from "components/AANew/Store/StoreCard";
 
 export default function Store() {
 	const { user, isAdmin } = useSelector((state) => state.auth);
@@ -11,157 +12,48 @@ export default function Store() {
 	const [StoreInfo, setStoreInfo] = useState([]);
 	const [name, setName] = useState("");
 
-	useEffect(() => {
-		const idUser = id ? id : user._id;
-		axios.get(`/store/api/owner/${idUser}`).then((res) => {
-			if (res.data) {
-				res.data.stores.map((el) => (el.createdAt = el.createdAt.slice(0, 10)));
-				console.log(res.data);
-				setStoreInfo(res.data.stores);
-				setName(res.data.userName);
-			}
-		});
-	}, [id, user]);
+	const getStoresByUser = () => {
+		api.getStoreByUser(user._id)
+			.then(response => {
+				const result = response.data;
+				const { stores, userName } = result;
+				setStoreInfo(stores);
+				setName(userName);
+				console.log(StoreInfo);
 
-	const storeExists = () => {
-		return (
-			<>
-				<section className="relative py-16 bg-blueGray-200">
-					<div className="container mx-auto px-4">
-						<div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
-							<div className="px-6">
-								<div className="flex flex-wrap justify-center">
-									<div className="w-36 h-36 relative m-4 rounded bg-white">
-										{user?._id ? (
-											user._id === id ? (
-												<h1 className="text-xl">Your Stores:</h1>
-											) : (
-												<h1 className="text-xl">{name}'s Store</h1>
-											)
-										) : (
-											<h1 className="text-xl">Stores:</h1>
-										)}
-									</div>
-								</div>
-								<div className="flex flex-row justify-evenly">
-									{StoreInfo.map((el) => {
-										console.log(el);
-										return (
-											<div className="md:w-4/12 px-4">
-												<Link to={`/store/${el._id}`}>
-													<div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-lightBlue-500">
-														<img
-															alt="..."
-															src={
-																!el.profileImage ||
-																el.profileImage === "defaultStorePic.png"
-																	? "https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-																	: el.profileImage
-															}
-															className="w-full align-middle rounded-t-lg"
-														/>
-														<blockquote className="relative p-8 mb-4">
-															<svg
-																preserveAspectRatio="none"
-																xmlns="http://www.w3.org/2000/svg"
-																viewBox="0 0 583 95"
-																className="absolute left-0 w-full block h-95-px -top-94-px"
-															>
-																<polygon
-																	points="-30,95 583,95 583,65"
-																	className="text-lightBlue-500 fill-current"
-																></polygon>
-															</svg>
-															<h4 className="text-xl font-bold text-white">
-																{el["fullName"]}
-															</h4>
-															<p className="text-md font-light mt-2 text-white">
-																{el["description"]}
-															</p>
-														</blockquote>
-													</div>
-												</Link>
-											</div>
-										);
-									})}
-									{StoreInfo.length < 2 ? (
-										<div>
-											<Link to="/create-store">
-												<i className="fa fa-plus"></i>
-											</Link>
-										</div>
-									) : (
-										""
-									)}
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-			</>
-		);
-	};
+			}).catch(err => { console.log(err) })
+	}
+
+	useEffect(() => {
+		getStoresByUser();
+	}, [id, user]);
 
 	return (
 		<>
-			<Navbar transparent />
-			<main className="profile-page">
-				<section className="relative block h-500-px">
-					<div className="w-50 justify-items-center"></div>
-					<div
-						className="absolute top-0 w-full h-full bg-center bg-cover"
-						style={{
-							backgroundImage:
-								"url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')",
-						}}
-					>
-						<span
-							id="blackOverlay"
-							className="w-full h-full absolute opacity-50 bg-black"
-						></span>
+			<div className="flex flex-col items-center justify-center mt-10">
+				<h1 className="lg:text-5xl md:text-4xl text-2xl font-bold leading-10 text-gray-800">{name} Stores</h1>
+				<p className="text-base leading-normal text-center text-gray-600 mt-4 xl:w-1/2 w-10/12">We just got featured in the following magazines and it has been the most incredible journey. <br></br>We work with the best fashion magazines across the world</p>
+			</div>
+			<div className="flex flex-col mt-10">
+				{StoreInfo.map((el) => {
+					return (
+						<StoreCard item={el} name={name} />
+					);
+				})}
+				{StoreInfo.length < 2 ? (
+					<div className="flex justify-center mt-10">
+						<Link to="/create-store">
+							<button className="flex flex-row ml-2 sm:ml-3 font-normal focus:outline-none bg-indigo-700 dark:hover:bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 dark:bg-indigo-600 rounded text-white px-6 py-2 text-sm">
+								<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+									<path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+								</svg>
+								&nbsp;&nbsp; Add New Store</button>
+						</Link>
 					</div>
-					<div
-						className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
-						style={{ transform: "translateZ(0)" }}
-					>
-						<svg
-							className="absolute bottom-0 overflow-hidden"
-							xmlns="http://www.w3.org/2000/svg"
-							preserveAspectRatio="none"
-							version="1.1"
-							viewBox="0 0 2560 100"
-							x="0"
-							y="0"
-						>
-							<polygon
-								className="text-blueGray-200 fill-current"
-								points="2560 0 2560 100 0 100"
-							></polygon>
-						</svg>
-					</div>
-				</section>
-				{StoreInfo.length > 0 ? (
-					(console.log(StoreInfo), storeExists())
 				) : (
-					<>
-						<section className="relative py-16 bg-blueGray-200">
-							<div className="container mx-auto px-4">
-								<div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
-									<h1 className="mx-auto text-xl py-3">
-										You Don't Have Any Stores yet. Create One?
-									</h1>
-									<div>
-										<Link to="/create-store">
-											<i className="fa fa-plus"></i>
-										</Link>
-									</div>
-								</div>
-							</div>
-						</section>
-					</>
+					""
 				)}
-			</main>
-			<Footer />
+			</div>
 		</>
 	);
 }

@@ -8,7 +8,7 @@
     "server": "nodemon index.js",
     "Frontend": "cd Frontend && npm run start",
     "server-install": "npm install",
-    "client-install": "cd Frontend && npm install",
+    "client-install": "cd Frontend && npm install --force",
     "install-all": "concurrently \"npm run server-install\" \"npm run client-instal1\"",
     "dev": "concurrently \"npm run server\" \"npm run Frontend\"",
     "heroku-postbuild": "cd Frontend && npm install && npm run build"
@@ -36,6 +36,7 @@
     "process": "^0.11.10",
     "pug": "2.0.0-beta11",
     "socket.io": "^4.5.0",
+    "stripe": "^9.1.0",
     "twig": "^1.15.4"
   }
 }

@@ -2,16 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as faceapi from "face-api.js";
 import CircularProgress from '@material-ui/core/CircularProgress/';
 import Backdrop from '@material-ui/core/Backdrop/';
-import Navbar from '../components/Navbars/IndexNavbar';
-import Footer from '../components/Footers/Footer';
 import * as api from '../api/Api';
-import { useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 
 //Imgs
 import defaultImg from '../assets/img/cin.png';
 
-export default function IdentityVerif() {
+export default function IdentityVerif(props) {
     const { id } = useParams();
     const [firstImg, setFirstImg] = useState('');
     const [secondImg, setSecondImg] = useState(defaultImg);
@@ -29,13 +27,12 @@ export default function IdentityVerif() {
     const [step4, setStep4] = useState("step");
     //image size
     const [sizeAlert, setSizeAlert] = useState('');
-    const [value, setValue] = useState(5);
     const history = useHistory();
 
     //verifiy store
     const verifyStore = async () => {
         api.verifyStore(id)
-        .catch(err => console.log(err));
+            .catch(err => console.log(err));
     };
 
     const handleSecondImageUpload = (e) => {
@@ -95,10 +92,12 @@ export default function IdentityVerif() {
             verifyStore();
             // let video = videoRef.current;
             // video.getVideoTracks()[0].stop();
-            videoRef.current.srcObject.getVideoTracks()[0].stop();
+            //videoRef.current.srcObject.getVideoTracks()[0].stop();
             setTimeout(() => {
-                history.push(`/store/${id}`);
-            }, 5000);
+                // history.push(`/store/${id}`);
+                videoRef.current.srcObject.getVideoTracks()[0].stop();
+                props.switchEtape(3);
+            }, 3000);
         }
         else {
             setMatchFound("not found");
@@ -161,24 +160,19 @@ export default function IdentityVerif() {
     useEffect(() => {
         loadModels();
         getUserCamera();
-        
     }, [id])
+    useEffect(() => {
+        getUserCamera();
+    }, [])
     return (
         <>
-            <Navbar />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             {matchFound == "found" ?
-            <div className="flex justify-center mb-4">
-            <div class="badge badge-success gap-2 text-xl">
-                You will be redirecting to your store, please wait
-            </div>
-            </div>
-            :null}
+                <div className="flex justify-center mb-4">
+                    <div class="badge badge-success gap-2 text-xl">
+                        You will be redirecting to the final step , please wait
+                    </div>
+                </div>
+                : null}
             <div className="flex flex-row flex-wrap justify-around">
                 <div className="flex-col">
                     <div className="flex justify-center mb-2">
@@ -220,6 +214,7 @@ export default function IdentityVerif() {
                                 :
                                 <button className='btn' onClick={takePicture}>Take Photo</button>
                             }
+                            <button className='btn' onClick={getUserCamera}>Open Camera</button>
                         </div>
                     </div>
                 </div>
@@ -238,7 +233,8 @@ export default function IdentityVerif() {
                             Check Match
                         </button>
                     </div>
-                    <div className="flex flex row justify-end mb-2 mr-12">
+
+                    <div className="flex flex-row justify-end mb-2 mr-12">
                         {matchFound == "found" ?
                             <div class="flex-initial w-64 alert alert-success shadow-lg">
                                 <div>
@@ -281,10 +277,24 @@ export default function IdentityVerif() {
                             </Backdrop>
                             : ""}
                     </div>
+                    <div className="flex justify-center">
+                        <button onClick={() => props.switchEtape(1)} role="button" aria-label="Next step" className="flex items-center justify-center py-4 px-7 focus:outline-none bg-white border rounded border-gray-400 mt-2 md:mt-14 hover:bg-gray-100  focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+                            </svg>
+                            <span className="text-sm font-medium text-center text-gray-800 capitalize">Previous Step</span>
+
+                        </button>
+                        <button onClick={() => props.switchEtape(3)} role="button" aria-label="Next step" className="flex items-center justify-center py-4 px-7 focus:outline-none bg-white border rounded border-gray-400 mt-2 md:mt-14 hover:bg-gray-100  focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                            <span className="text-sm font-medium text-center text-gray-800 capitalize">Next Step</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
             <canvas className='width-100 height-100'></canvas>
-            <Footer />
             <link href="https://cdn.jsdelivr.net/npm/daisyui@2.14.2/dist/full.css" rel="stylesheet" type="text/css" />
             <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
             <script src="../path/to/flowbite/dist/flowbite.js"></script>
