@@ -43,7 +43,7 @@
     "material-ui-popup-state": "^2.0.0",
     "mdb-ui-kit": "^4.0.0",
     "node-fetch": "^2.6.7",
-    "npm": "^8.6.0",
+    "npm": "^10.2.2",
     "prop-types": "^15.8.1",
     "pure-react-carousel": "^1.28.1",
     "react": "17.0.1",
