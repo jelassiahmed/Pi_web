@@ -40,7 +40,7 @@
     "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "material-ui-popup-state": "^2.0.0",
+    "material-ui-popup-state": "^5.0.11",
     "mdb-ui-kit": "^4.0.0",
     "node-fetch": "^2.6.7",
     "npm": "^8.6.0",
