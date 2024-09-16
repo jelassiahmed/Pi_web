@@ -66,7 +66,7 @@
     "react-tabindex": "^1.0.3",
     "redux": "^4.1.2",
     "socket.io-client": "^4.5.0",
-    "styled-components": "^5.3.5",
+    "styled-components": "^5.3.7",
     "tailgrids": "^1.1.7",
     "web-vitals": "^2.1.4"
   },
