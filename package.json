@@ -32,7 +32,7 @@
     "multer": "^1.4.4",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.7.3",
-    "nodemon": "^2.0.15",
+    "nodemon": "^2.0.17",
     "process": "^0.11.10",
     "pug": "2.0.0-beta11",
     "socket.io": "^4.5.0",
