@@ -42,7 +42,7 @@
     "lodash": "^4.17.21",
     "material-ui-popup-state": "^2.0.0",
     "mdb-ui-kit": "^4.0.0",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.2.10",
     "npm": "^8.6.0",
     "prop-types": "^15.8.1",
     "pure-react-carousel": "^1.28.1",
